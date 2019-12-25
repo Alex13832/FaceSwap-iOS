@@ -24,12 +24,7 @@
 }
 
 -(id)init {
-    if ( self = [super init] ) {
-        // Predictor for facial landmark positions
-        NSString *modelFileName = [[NSBundle mainBundle] pathForResource:@"shape_predictor_68_face_landmarks" ofType:@"dat"];
-        const char* modelFileNameCString = [modelFileName UTF8String];
-        
-    }
+    if ( self = [super init] ) {}
     return self;
 }
 

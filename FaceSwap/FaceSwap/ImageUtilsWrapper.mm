@@ -18,7 +18,7 @@
     return self;
 }
 
--(UIImage*)swap:(UIImage*)img1 face2:(UIImage*)img2
+-(UIImage*)swap:(UIImage*)img1 face2:(UIImage*)img2 landmarks1:(NSMutableArray*)lmarks1 landmarks2:(NSMutableArray*)lmarks2
 {
     std::cout << "SWAPPING" << std::endl;
     FSImageUtils *im_utils = [[FSImageUtils alloc] init];

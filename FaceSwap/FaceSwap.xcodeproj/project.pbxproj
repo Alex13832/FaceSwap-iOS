@@ -13,7 +13,6 @@
 		1175CD4F23AFD4AC005A02DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1175CD4D23AFD4AC005A02DF /* Main.storyboard */; };
 		1175CD5123AFD4AE005A02DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1175CD5023AFD4AE005A02DF /* Assets.xcassets */; };
 		1175CD5423AFD4AE005A02DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1175CD5223AFD4AE005A02DF /* LaunchScreen.storyboard */; };
-		1175CD5C23AFEBF5005A02DF /* iu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1175CD5B23AFEBF5005A02DF /* iu.jpg */; };
 		1175CD6723B13D0F005A02DF /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1175CD6623B13D0F005A02DF /* opencv2.framework */; };
 		1175CD6A23B14B30005A02DF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1175CD6923B14B30005A02DF /* Accelerate.framework */; };
 		1175CD7123B153FA005A02DF /* ImageUtilsWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD7023B153FA005A02DF /* ImageUtilsWrapper.mm */; };
@@ -29,7 +28,6 @@
 		1175CD5023AFD4AE005A02DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1175CD5323AFD4AE005A02DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1175CD5523AFD4AE005A02DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1175CD5B23AFEBF5005A02DF /* iu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iu.jpg; sourceTree = "<group>"; };
 		1175CD5F23B13000005A02DF /* FaceSwap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FaceSwap-Bridging-Header.h"; sourceTree = "<group>"; };
 		1175CD6623B13D0F005A02DF /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = SOURCE_ROOT; };
 		1175CD6923B14B30005A02DF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -55,7 +53,6 @@
 		1175CD3B23AFD4AC005A02DF = {
 			isa = PBXGroup;
 			children = (
-				1175CD5B23AFEBF5005A02DF /* iu.jpg */,
 				1175CD4623AFD4AC005A02DF /* FaceSwap */,
 				1175CD4523AFD4AC005A02DF /* Products */,
 				1175CD6823B14B30005A02DF /* Frameworks */,
@@ -160,7 +157,6 @@
 				1175CD5423AFD4AE005A02DF /* LaunchScreen.storyboard in Resources */,
 				1175CD5123AFD4AE005A02DF /* Assets.xcassets in Resources */,
 				1175CD4F23AFD4AC005A02DF /* Main.storyboard in Resources */,
-				1175CD5C23AFEBF5005A02DF /* iu.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

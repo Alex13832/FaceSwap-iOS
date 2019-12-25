@@ -53,7 +53,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func onSwapPressed(_ sender: Any) {
 //        detectLandmarks(image:
         let im_utils = ImageUtilsWrapper()
-        let im3 = im_utils.swap(im1, face2: im2);
+        let lmarks1: NSMutableArray = [0];
+        let lmarks2: NSMutableArray = [0];
+        let im3 = im_utils.swap(im1, face2: im2, landmarks1: lmarks1, landmarks2: lmarks2);
 
 //        let im3 = detectFaces(image: im1)
 //        let im4 = detectFaces(image: im2)
