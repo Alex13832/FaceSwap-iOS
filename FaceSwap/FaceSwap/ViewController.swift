@@ -51,15 +51,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
      Listens for swap button press. Is enabled if both images are not nil.
      */
     @IBAction func onSwapPressed(_ sender: Any) {
-//        detectLandmarks(image:
-        let im_utils = ImageUtilsWrapper()
-        let lmarks1: NSMutableArray = [0];
-        let lmarks2: NSMutableArray = [0];
-        let im3 = im_utils.swap(im1, face2: im2, landmarks1: lmarks1, landmarks2: lmarks2);
+//        let im_utils = ImageUtilsWrapper()
+//        let lmarks1: NSMutableArray = [0];
+//        let lmarks2: NSMutableArray = [0];
+//        let im3 = im_utils.swap(im1, face2: im2, landmarks1: lmarks1, landmarks2: lmarks2);
 
 //        let im3 = detectFaces(image: im1)
 //        let im4 = detectFaces(image: im2)
-//
+        
+        detectLandmarks(image: im1)
+
 //        if selected_index == 0 {
 //            imageView.image = im3
 //        } else if selected_index == 1 {
@@ -87,7 +88,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
            default:
                orientation = 1
            }
-        
         
         let faceLandmarksRequest = VNDetectFaceLandmarksRequest(completionHandler: self.handleFaceFeatures)
         let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!, orientation: CGImagePropertyOrientation(rawValue: CGImagePropertyOrientation.RawValue(orientation))!, options: [:])
@@ -196,6 +196,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         UIGraphicsBeginImageContextWithOptions(image.size, true, 0.0)
         let context = UIGraphicsGetCurrentContext()
+        
+        
      
         // draw the image
         image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
@@ -222,11 +224,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.faceContour {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.setLineWidth(8.0)
@@ -239,11 +237,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.outerLips {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.closePath()
@@ -257,11 +251,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.innerLips {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.closePath()
@@ -275,11 +265,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.leftEye {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.closePath()
@@ -293,11 +279,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.rightEye {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.closePath()
@@ -311,11 +293,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.leftPupil {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.closePath()
@@ -329,11 +307,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.rightPupil {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.closePath()
@@ -347,11 +321,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.leftEyebrow {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.setLineWidth(8.0)
@@ -364,11 +334,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.rightEyebrow {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.setLineWidth(8.0)
@@ -381,11 +347,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.nose {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.closePath()
@@ -399,11 +361,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.noseCrest {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.setLineWidth(8.0)
@@ -416,11 +374,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let landmark = face.landmarks?.medianLine {
             for i in 0...landmark.pointCount - 1 { // last point is 0,0
                 let point = landmark.normalizedPoints[i]
-                if i == 0 {
-                    context?.move(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                } else {
-                    context?.addLine(to: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h))
-                }
+                context?.addEllipse(in: CGRect(origin: CGPoint(x: x + CGFloat(point.x) * w, y: y + CGFloat(point.y) * h), size: CGSize(width: 5, height: 5)))
             }
         }
         context?.setLineWidth(8.0)
