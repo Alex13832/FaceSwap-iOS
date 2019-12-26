@@ -8,8 +8,8 @@
 
 
 #import "FSImageUtils.hpp"
-#include <vector>
-#include <string>
+#import <vector>
+#import <string>
 
 #import "opencv2/photo.hpp"
 #import "opencv2/imgproc.hpp"
@@ -31,24 +31,54 @@
 #pragma mark Global functions
 
 /**
- Sets the primary image.
+ @brief Sets the primary image.
  */
 -(void)setImg1:(UIImage*) img
 {
     mat1 = [self cvMatFromUIImage:img];
+    cv::cvtColor(mat1, mat1, cv::COLOR_RGB2BGR);
 }
 
 
 /**
- Sets the secondary image.
+ @brief Sets the secondary image.
  */
 -(void)setImg2:(UIImage*) img
 {
     mat2 = [self cvMatFromUIImage:img];
+    cv::cvtColor(mat2, mat2, cv::COLOR_RGB2BGR);
 }
 
 /**
- Rotates the primarey image, is to be used when using camera as input.
+ @brief Sets the landmarks for image 1.
+ */
+- (void)setLandmarks1:(NSArray *)landmarks {
+    
+    int x, y;
+    for(int i=0; i<[landmarks count]; i+=2)
+    {
+        x = [((NSNumber*)[landmarks objectAtIndex:i]) intValue];
+        y = [((NSNumber*)[landmarks objectAtIndex:i+1]) intValue];
+        cv::Point2f pt(x, y);
+        landmarks1.push_back(pt);
+    }
+}
+
+/**
+ @brief Sets the landmarks for image 2.
+ */
+- (void)setLandmarks2:(NSArray *)landmarks {
+    int x, y;
+    for(int i=0; i<[landmarks count]; i+=2) {
+        x = [((NSNumber*)[landmarks objectAtIndex:i]) intValue];
+        y = [((NSNumber*)[landmarks objectAtIndex:i+1]) intValue];
+        cv::Point2f pt(x, y);
+        landmarks2.push_back(pt);
+    }
+}
+
+/**
+ @brief Rotates the primarey image, is to be used when using camera as input.
  */
 -(void)rotateImg1
 {
@@ -58,7 +88,7 @@
 }
 
 /**
- Rotates the secondary image, is to be used when using camera as input.
+ @brief Rotates the secondary image, is to be used when using camera as input.
  */
 -(void)rotateImg2
 {
@@ -69,7 +99,7 @@
 
 
 /**
- Swappes faces of two selfie images. (Public)
+ @brief Swaps faces of two selfie images. (Public)
  The face in img1 will be pasted over img2's face.
  img1: first selfie image.
  img2: second selfie image.
@@ -77,31 +107,29 @@
 -(UIImage*)swapFaces :(FSSwapStatus_t&)FSStatus
 {
     FSStatus = FS_STATUS_OK;
+    cv::Mat mat = [self faceSwap:mat1 :mat2 :landmarks1 :landmarks2];
     
-    
+    cv::cvtColor(mat, mat, cv::COLOR_BGR2RGB);
     // Convert back to UIImage
-    UIImage* swUI = [self UIImageFromCVMat:mat1];
+    UIImage* swUI = [self UIImageFromCVMat:mat];
     
     return swUI;
 }
 
 
 /**
- Swaps faces for images with >= 2 faces. (Public)
+ @brief Swaps faces for images with >= 2 faces. (Public)
  */
 -(UIImage*)swapFacesMulti :(FSSwapStatus_t&)FSStatus
 {
     FSStatus = FS_STATUS_OK;
-    
-    
     UIImage* swUI = [self UIImageFromCVMat:mat1];
-    
     return swUI;
 }
 
 
 /**
- Replaces the faces in image 2 with the face in image1.
+ @brief Replaces the faces in image 2 with the face in image1.
  */
 -(UIImage*)swapFacesOneToMany :(FSSwapStatus_t&)FSStatus
 {
@@ -113,15 +141,10 @@
     return swUI;
 }
 
-
-#pragma mark Facial landmarks section
-
-
 #pragma mark FaceSwap section
 
-
 /**
- Main faceSwap function
+ @brief Main faceSwap function
  */
 -(cv::Mat)faceSwap:(cv::Mat)img1 :(cv::Mat)img2 :(std::vector<cv::Point2f>)points1 :(std::vector<cv::Point2f>)points2
 {
@@ -173,7 +196,7 @@
     }
     
     cv::Mat mask = cv::Mat::zeros(img2.rows, img2.cols, img2.depth());
-    //cv::fillConvexPoly(mask,&hull8U[0], (int)hull8U.size(), cv::Scalar(255,255,255));
+    cv::fillConvexPoly(mask,&hull8U[0], (int)hull8U.size(), cv::Scalar(255,255,255));
     
     // Clone seamlessly.
     cv::Rect r = cv::boundingRect(hull2);
@@ -193,7 +216,7 @@
 
 
 /**
- Warps and apha blends triangular regions from img1 and img2 to img
+ @brief Warps and apha blends triangular regions from img1 and img2 to img
  */
 -(void)warpTriangle:(cv::Mat&)img1 :(cv::Mat&)img2 :(std::vector<cv::Point2f>&)t1 :(std::vector<cv::Point2f>&)t2
 {
@@ -228,7 +251,7 @@
 
 
 /**
- Apply affine transform calculated using srcTri and dstTri to src
+ @brief Apply affine transform calculated using srcTri and dstTri to src
  */
 -(void)applyAffineTransform:(cv::Mat&)warpImage :(cv::Mat&)src :(std::vector<cv::Point2f>&)srcTri :(std::vector<cv::Point2f>&)dstTri
 {
@@ -240,7 +263,7 @@
 
 
 /**
- Calculates the Delaunay triangulation of a set of points.
+ @brief Calculates the Delaunay triangulation of a set of points.
  */
 -(void)calculateDelaunayTriangles:(cv::Rect)rect :(std::vector<cv::Point2f>&)points :(std::vector<std::vector<int>>&)delaunayTri
 {
@@ -275,12 +298,13 @@
 
 
 /**
- Debug function for plotting found landmarks
+ @brief Debug function for plotting found landmarks
  */
 -(void)drawPoints:(cv::Mat&)mat :(std::vector<std::vector<cv::Point2f>>)landmarks
 {
-    for (size_t i = 0; i < landmarks[0].size(); i++)
+    for (size_t i = 0; i < landmarks[0].size(); i++) {
         cv::circle(mat, cv::Point((int)landmarks[0][i].x, (int)landmarks[0][i].y), 5, cv::Scalar(0,255,0));
+    }
 }
 
 
@@ -288,7 +312,7 @@
 
 
 /**
- Adjusts the size of input image.
+ @brief Adjusts the size of input image.
  */
 -(cv::Mat)resizeImage:(cv::Mat)img
 {
@@ -307,7 +331,7 @@
 
 /**
  Converts UIImage to OpenCV Mat
- http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
+ @brief http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
  */
 - (cv::Mat)cvMatFromUIImage:(UIImage *)image
 {
@@ -317,7 +341,7 @@
     
     cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels (color channels + alpha)
     
-    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to  data
+    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to data
                                                     cols,                       // Width of bitmap
                                                     rows,                       // Height of bitmap
                                                     8,                          // Bits per component
@@ -334,7 +358,7 @@
 
 
 /**
- Converts UIImage to grayscale OpenCV Mat
+ @brief Converts UIImage to grayscale OpenCV Mat
  http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
  */
 - (cv::Mat)cvMatGrayFromUIImage:(UIImage *)image
@@ -362,7 +386,7 @@
 
 
 /**
- Converts OpenCV Mat to UIImage
+ @brief Converts OpenCV Mat to UIImage
  http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
  */
 -(UIImage *)UIImageFromCVMat:(cv::Mat)cvMat

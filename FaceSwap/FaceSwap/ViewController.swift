@@ -24,9 +24,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var imTemporary: UIImage!
     var selected_index = 0
     
-    var landmarks1: NSMutableArray!
-    var landmarks2: NSMutableArray!
-    var landmarksTemporary: NSMutableArray!
+    var landmarks1:[Int] = []
+    var landmarks2:[Int] = []
     
     @IBOutlet weak var swap_button: UIBarButtonItem!
     var sequenceHandler = VNSequenceRequestHandler()
@@ -57,18 +56,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
      @brief Listens for swap button press. Is enabled if both images are not nil.
      */
     @IBAction func onSwapPressed(_ sender: Any) {
-        
         imTemporary = im1
         currentImage = 1
         detectLandmarks(image: im1)
-        print("Landmarks1 count \(landmarks1.count)")
         
         imTemporary = im2
         currentImage = 2
         detectLandmarks(image: im2)
-        print("Landmarks2 count \(landmarks2.count)")
         
-//        let im3 = im_utils.swap(im1, face2: im2, landmarks1: lmarks1, landmarks2: lmarks2);
+        let imUtils = ImageUtilsWrapper()
+        let swapped = imUtils.swap(im1, face2: im2, landmarks1: landmarks1, landmarks2: landmarks2)
+        
+        imageView.image = swapped
     }
     
     /**
@@ -137,7 +136,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         
         let faceLandmarksRequest = VNDetectFaceLandmarksRequest(completionHandler: self.handleFaceFeatures)
-        let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!, orientation: CGImagePropertyOrientation(rawValue: CGImagePropertyOrientation.RawValue(orientation))!, options: [:])
+        let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!, orientation: CGImagePropertyOrientation(rawValue: CGImagePropertyOrientation.RawValue(3))!, options: [:])
         do {
             try requestHandler.perform([faceLandmarksRequest])
         } catch {
@@ -146,7 +145,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     /**
-    @brief Handles landmarks for a face.
+     @brief Handles landmarks for a face.
      */
     func handleFaceFeatures(request: VNRequest, errror: Error?) {
         guard let observations = request.results as? [VNFaceObservation] else {
@@ -160,11 +159,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     /**
-    @brief Gets all landmarks for a face.
+     @brief Gets all landmarks for a face.
      */
     func getLandmarksForFace(image: UIImage, _ face: VNFaceObservation) -> Void {
         
-        let lmrks: NSMutableArray = [CGPoint()]
+        var lmrks:[Int] = []
         
         UIGraphicsBeginImageContextWithOptions(image.size, true, 0.0)
         let context = UIGraphicsGetCurrentContext()
@@ -185,7 +184,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 
                 let xx = x + CGFloat(point.x) * w
                 let yy = y + CGFloat(point.y) * h
-                lmrks.add(CGPoint(x: xx, y: yy))
+                //lmkrs.append(CGPoint(x: xx, y: yy))
+                lmrks.append(Int(xx));
+                lmrks.append(Int(yy));
+                
             }
         }
         

@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 #import "opencv2/photo.hpp"
 #import "opencv2/imgproc.hpp"
@@ -22,6 +23,7 @@
 @interface FSImageUtils : NSObject
 {
     cv::Mat mat1, mat2;
+    std::vector<cv::Point2f> landmarks1, landmarks2;
 }
 
 typedef enum FSSwapStatus_t
@@ -32,13 +34,14 @@ typedef enum FSSwapStatus_t
     FS_STATUS_IMAGE_TOO_SMALL
 } FSSwapStatus_t;
 
-
 -(UIImage*)swapFaces :(FSSwapStatus_t&)FSStatus;
 -(UIImage*)swapFacesMulti :(FSSwapStatus_t&)FSStatus;
 -(UIImage*)swapFacesOneToMany :(FSSwapStatus_t&)FSStatus;
 
 -(void)setImg1:(UIImage*) img;
 -(void)setImg2:(UIImage*) img;
+-(void)setLandmarks1:(NSArray*) landmarks;
+-(void)setLandmarks2:(NSArray*) landmarks;
 -(void)rotateImg1;
 -(void)rotateImg2;
 

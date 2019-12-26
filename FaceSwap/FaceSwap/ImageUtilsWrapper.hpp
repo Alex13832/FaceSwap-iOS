@@ -14,7 +14,7 @@
 
 @interface ImageUtilsWrapper : NSObject
 
--(UIImage*)swap:(UIImage*)img1 face2:(UIImage*)img2 landmarks1:(NSMutableArray*)lmarks1 landmarks2:(NSMutableArray*)lmarks2;
+-(UIImage*)swap:(UIImage*)img1 face2:(UIImage*)img2 landmarks1:(NSArray*)lmarks1 landmarks2:(NSArray*)lmarks2;
 
 @end
 
