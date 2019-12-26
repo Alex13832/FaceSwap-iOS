@@ -135,8 +135,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             orientation = 1
         }
         
+        //TODO: Figure out orientation.
+        
         let faceLandmarksRequest = VNDetectFaceLandmarksRequest(completionHandler: self.handleFaceFeatures)
-        let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!, orientation: CGImagePropertyOrientation(rawValue: CGImagePropertyOrientation.RawValue(3))!, options: [:])
+        
+        let requestHandler = VNImageRequestHandler(cgImage: image.cgImage!, orientation: CGImagePropertyOrientation(rawValue: UInt32(3))! ,options: [:])
+
         do {
             try requestHandler.perform([faceLandmarksRequest])
         } catch {

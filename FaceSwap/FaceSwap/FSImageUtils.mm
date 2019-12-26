@@ -184,7 +184,6 @@
             t1.push_back(hull1[dt[i][j]]);
             t2.push_back(hull2[dt[i][j]]);
         }
-        
         [self warpTriangle:img1 :img1Warped :t1 :t2];
     }
     
@@ -234,7 +233,7 @@
     
     // Get mask by filling triangle
     cv::Mat mask = cv::Mat::zeros(r2.height, r2.width, img1.type());
-    //cv::fillConvexPoly(mask, t2RectInt, cv::Scalar(1.0, 1.0, 1.0), 16, 0);
+    cv::fillConvexPoly(mask, t2RectInt, cv::Scalar(1.0, 1.0, 1.0), 16, 0);
     
     // Apply warpImage to small rectangular patches
     cv::Mat img1Rect;
