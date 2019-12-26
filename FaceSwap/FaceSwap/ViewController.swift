@@ -7,7 +7,6 @@
 //
 
 // TODO:
-// 1 Get landmarks and put them in two arrays.
 // 2 Insert them in image utils together with the images.
 
 import UIKit
@@ -20,7 +19,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageView: UIImageView!
     var im1: UIImage!
     var im2: UIImage!
+    
+    var currentImage = 0
+    var imTemporary: UIImage!
     var selected_index = 0
+    
+    var landmarks1: NSMutableArray!
+    var landmarks2: NSMutableArray!
+    var landmarksTemporary: NSMutableArray!
+    
     @IBOutlet weak var swap_button: UIBarButtonItem!
     var sequenceHandler = VNSequenceRequestHandler()
     
@@ -29,9 +36,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // Do any additional setup after loading the view.
     }
     
-    
     /**
-     Listens for tap gesture. When tapped, the camera roll will be opened.
+     @brief Listens for tap gesture. When tapped, the camera roll will be opened.
      */
     @IBAction func onTap(_ sender: UITapGestureRecognizer) {
         if UIImagePickerController.isSourceTypeAvailable(
@@ -48,29 +54,70 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     /**
-     Listens for swap button press. Is enabled if both images are not nil.
+     @brief Listens for swap button press. Is enabled if both images are not nil.
      */
     @IBAction func onSwapPressed(_ sender: Any) {
-        //        let im_utils = ImageUtilsWrapper()
-        //        let lmarks1: NSMutableArray = [0];
-        //        let lmarks2: NSMutableArray = [0];
-        //        let im3 = im_utils.swap(im1, face2: im2, landmarks1: lmarks1, landmarks2: lmarks2);
         
-        //        let im3 = detectFaces(image: im1)
-        //        let im4 = detectFaces(image: im2)
-        
+        imTemporary = im1
+        currentImage = 1
         detectLandmarks(image: im1)
+        print("Landmarks1 count \(landmarks1.count)")
         
-        //        if selected_index == 0 {
-        //            imageView.image = im3
-        //        } else if selected_index == 1 {
-        //            imageView.image = im4
-        //        }
-        //
-        //        im1 = im3
-        //        im2 = im4
+        imTemporary = im2
+        currentImage = 2
+        detectLandmarks(image: im2)
+        print("Landmarks2 count \(landmarks2.count)")
+        
+//        let im3 = im_utils.swap(im1, face2: im2, landmarks1: lmarks1, landmarks2: lmarks2);
     }
     
+    /**
+     @brief Opens the camera roll and gets the selected image.
+     */
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! NSString
+        
+        if mediaType.isEqual(to: kUTTypeImage as String) {
+            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            imageView.image = image
+            
+            if selected_index == 0 {
+                im1 = image
+            } else if selected_index == 1 {
+                im2 = image
+            }
+            
+            if (im1 != nil) && (im2 != nil) {
+                swap_button.isEnabled = true
+            }
+        }
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    /**
+     @brief Listens for dismiss of camera roll.
+     */
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    /**
+     @brief Listens for segment (button) change.
+     */
+    @IBAction func onSegmentChange(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            imageView.image = im1
+        } else if sender.selectedSegmentIndex == 1 {
+            imageView.image = im2
+        }
+        selected_index = sender.selectedSegmentIndex
+    }
+    
+    /**
+     @brief Detects facial landmarks for an image.
+     */
     func detectLandmarks(image: UIImage) -> Void {
         
         var orientation:Int32 = 0
@@ -96,104 +143,26 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         } catch {
             print(error)
         }
-        
     }
     
+    /**
+    @brief Handles landmarks for a face.
+     */
     func handleFaceFeatures(request: VNRequest, errror: Error?) {
         guard let observations = request.results as? [VNFaceObservation] else {
             fatalError("unexpected result type!")
         }
         
         for face in observations {
-            addFaceLandmarksToImage(face)
-            let lmrks = getLandmarksForFace(image: im1, face)
-            print(lmrks.count)
+            addFaceLandmarksToImage(image: imTemporary, face)
+            getLandmarksForFace(image: imTemporary, face)
         }
     }
     
-    
-    func detectFaces(image: UIImage) -> UIImage {
-        let ciImage1 = CIImage(cgImage: image.cgImage!)
-        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
-        let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: options)!
-        let faces = faceDetector.features(in: ciImage1)
-        var im = image
-        
-        if let face = faces.first as? CIFaceFeature {
-            im = drawRectangleOnImage(image: im, rect: face.bounds)
-        }
-        
-        return im
-    }
-    
-    
     /**
-     Draws a rectangle over an UIImage. Returns a new image.
+    @brief Gets all landmarks for a face.
      */
-    func drawRectangleOnImage(image: UIImage, rect: CGRect) -> UIImage {
-        let image_size = image.size
-        let scale: CGFloat = 0
-        UIGraphicsBeginImageContextWithOptions(image_size, false, scale)
-        
-        let origin = CGPoint(x: rect.origin.x, y: image.size.height - rect.size.height - rect.origin.y)
-        let rect2 = CGRect(origin: origin, size: rect.size)
-        
-        image.draw(at: CGPoint.zero)
-        UIColor.green.setStroke()
-        UIRectFrame(rect2)
-        
-        let image_with_box = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image_with_box!
-    }
-    
-    
-    /**
-     Opens the camera roll and gets the selected image.
-     */
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! NSString
-        
-        if mediaType.isEqual(to: kUTTypeImage as String) {
-            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-            imageView.image = image
-            
-            if selected_index == 0 {
-                im1 = image
-            } else if selected_index == 1 {
-                im2 = image
-            }
-            
-            if (im1 != nil) && (im2 != nil) {
-                swap_button.isEnabled = true
-            }
-        }
-        
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    /**
-     Listens for dismiss of camera roll.
-     */
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    /**
-     Listens for segment (button) change.
-     */
-    @IBAction func onSegmentChange(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            imageView.image = im1
-        } else if sender.selectedSegmentIndex == 1 {
-            imageView.image = im2
-        }
-        selected_index = sender.selectedSegmentIndex
-    }
-    
-    
-    func getLandmarksForFace(image: UIImage, _ face: VNFaceObservation) -> NSMutableArray {
+    func getLandmarksForFace(image: UIImage, _ face: VNFaceObservation) -> Void {
         
         let lmrks: NSMutableArray = [CGPoint()]
         
@@ -205,12 +174,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         context?.translateBy(x: 0, y: image.size.height)
         context?.scaleBy(x: 1.0, y: -1.0)
         
-        // draw the face rect
         let w = face.boundingBox.size.width * image.size.width
         let h = face.boundingBox.size.height * image.size.height
         let x = face.boundingBox.origin.x * image.size.width
         let y = face.boundingBox.origin.y * image.size.height
-        
         
         if let landmarks = face.landmarks?.allPoints {
             for i in 0...landmarks.pointCount - 1 {
@@ -222,12 +189,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
         }
         
-        return lmrks
+        if currentImage == 1 {
+            landmarks1 = lmrks
+        } else if currentImage == 2 {
+            landmarks2 = lmrks
+        }
     }
     
-    
-    func addFaceLandmarksToImage(_ face: VNFaceObservation) {
-        let image = im1!
+    /**
+     @brief Draws the landmarks to an input image.
+     */
+    func addFaceLandmarksToImage(image: UIImage, _ face: VNFaceObservation) {
         
         UIGraphicsBeginImageContextWithOptions(image.size, true, 0.0)
         let context = UIGraphicsGetCurrentContext()
