@@ -6,7 +6,6 @@
 //  Copyright © 2016-2019 Alexander Karlsson. All rights reserved.
 //
 
-
 #import "FSImageUtils.hpp"
 
 #import <vector>
@@ -20,9 +19,7 @@
 
 #define SIZE_LIMIT 20000
 
-@implementation FSImageUtils
-{
-}
+@implementation FSImageUtils {}
 
 -(id)init {
     if ( self = [super init] ) {}

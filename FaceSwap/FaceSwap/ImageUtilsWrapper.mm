@@ -15,13 +15,19 @@
 
 @implementation ImageUtilsWrapper
 
--(id)init
-{
+-(id)init {
     return self;
 }
 
--(UIImage*)swap:(UIImage*)img1 face2:(UIImage*)img2 landmarks1:(NSArray*)lmarks1 landmarks2:(NSArray*)lmarks2
-{
+/**
+ @brief Swap faces betwenn img1 and img2.
+ @param img1 [in] The face in this will be inserted im img2.
+ @param img2 [in] The face in img1 will be inserted here.
+ @param lmarks1 [in] Facial landmarks for img1.
+ @param lmarks2 [in] Facial landmarks for img2.
+ @return A UIImage with the face swap result.
+ */
+-(UIImage*)swap:(UIImage*)img1 face2:(UIImage*)img2 landmarks1:(NSArray*)lmarks1 landmarks2:(NSArray*)lmarks2 {
     std::cout << "SWAPPING" << std::endl;
     FSImageUtils *im_utils = [[FSImageUtils alloc] init];
     

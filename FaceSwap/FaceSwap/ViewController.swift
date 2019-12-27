@@ -65,9 +65,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         detectLandmarks(image: im2)
         
         let imUtils = ImageUtilsWrapper()
-        let swapped = imUtils.swap(im1, face2: im2, landmarks1: landmarks1, landmarks2: landmarks2)
-
-        imageView.image = swapped
+        let swapped1 = imUtils.swap(im1, face2: im2, landmarks1: landmarks1, landmarks2: landmarks2)
+        let swapped2 = imUtils.swap(im2, face2: im1, landmarks1: landmarks2, landmarks2: landmarks1)
+        
+        im1 = swapped2
+        im2 = swapped1
+        
+        if selected_index == 0 {
+            imageView.image = swapped2
+        } else if selected_index == 1 {
+            imageView.image = swapped1
+        }
     }
     
     /**
