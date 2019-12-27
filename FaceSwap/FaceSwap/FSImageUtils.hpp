@@ -3,7 +3,7 @@
 //  FaceSwap
 //
 //  Created by Alexander Karlsson on 2016-12-31.
-//  Copyright © 2016 Alexander Karlsson. All rights reserved.
+//  Copyright © 2016-2019 Alexander Karlsson. All rights reserved.
 //
 
 #ifndef FSImageUtils_hpp
@@ -13,12 +13,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "opencv2/photo.hpp"
-#import "opencv2/imgproc.hpp"
-#import "opencv2/imgcodecs.hpp"
-#import "opencv2/highgui.hpp"
 #import "opencv2/core.hpp"
-
 
 @interface FSImageUtils : NSObject
 {
@@ -35,15 +30,10 @@ typedef enum FSSwapStatus_t
 } FSSwapStatus_t;
 
 -(UIImage*)swapFaces :(FSSwapStatus_t&)FSStatus;
--(UIImage*)swapFacesMulti :(FSSwapStatus_t&)FSStatus;
--(UIImage*)swapFacesOneToMany :(FSSwapStatus_t&)FSStatus;
-
 -(void)setImg1:(UIImage*) img;
 -(void)setImg2:(UIImage*) img;
 -(void)setLandmarks1:(NSArray*) landmarks;
 -(void)setLandmarks2:(NSArray*) landmarks;
--(void)rotateImg1;
--(void)rotateImg2;
 
 @end
 

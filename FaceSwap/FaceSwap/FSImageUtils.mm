@@ -3,11 +3,12 @@
 //  FaceSwap
 //
 //  Created by Alexander Karlsson on 2016-12-31.
-//  Copyright © 2016 Alexander Karlsson. All rights reserved.
+//  Copyright © 2016-2019 Alexander Karlsson. All rights reserved.
 //
 
 
 #import "FSImageUtils.hpp"
+
 #import <vector>
 #import <string>
 
@@ -31,21 +32,20 @@
 #pragma mark Global functions
 
 /**
- @brief Sets the primary image.
+ @brief Sets image 1.
+ @param img [in] Image 1.
  */
--(void)setImg1:(UIImage*) img
-{
+-(void)setImg1:(UIImage*) img {
     mat1 = [self cvMatFromUIImage:img];
     cv::flip(mat1, mat1, 1);
     cv::cvtColor(mat1, mat1, cv::COLOR_RGB2BGR);
 }
 
-
 /**
  @brief Sets the secondary image.
+ @param img [in] image 2.
  */
--(void)setImg2:(UIImage*) img
-{
+-(void)setImg2:(UIImage*) img {
     mat2 = [self cvMatFromUIImage:img];
     cv::flip(mat2, mat2, 1);
     cv::cvtColor(mat2, mat2, cv::COLOR_RGB2BGR);
@@ -53,9 +53,9 @@
 
 /**
  @brief Sets the landmarks for image 1.
+ @param landmarks [in] Facial landmarks for image 1.
  */
 - (void)setLandmarks1:(NSArray *)landmarks {
-    
     int x, y;
     for(int i=0; i<[landmarks count]; i+=2)
     {
@@ -68,6 +68,7 @@
 
 /**
  @brief Sets the landmarks for image 2.
+ @param landmarks [in] Facial landmarks for image 2.
  */
 - (void)setLandmarks2:(NSArray *)landmarks {
     int x, y;
@@ -80,34 +81,12 @@
 }
 
 /**
- @brief Rotates the primarey image, is to be used when using camera as input.
- */
--(void)rotateImg1
-{
-    cv::transpose(mat1, mat1);
-    cv::flip(mat1, mat1, 1);
-    cv::resize(mat1, mat1, cv::Size(mat1.rows, mat1.cols));
-}
-
-/**
- @brief Rotates the secondary image, is to be used when using camera as input.
- */
--(void)rotateImg2
-{
-    cv::transpose(mat2, mat2);
-    cv::flip(mat2, mat2, 1);
-    cv::resize(mat2, mat2, cv::Size(mat2.rows, mat2.cols));
-}
-
-
-/**
  @brief Swaps faces of two selfie images. (Public)
  The face in img1 will be pasted over img2's face.
- img1: first selfie image.
- img2: second selfie image.
+ @param FSStatus [out] return status
+ @return an UIImage with face swap result.
  */
--(UIImage*)swapFaces :(FSSwapStatus_t&)FSStatus
-{
+-(UIImage*)swapFaces :(FSSwapStatus_t&)FSStatus {
     FSStatus = FS_STATUS_OK;
     cv::Mat mat = [self faceSwap:mat1 :mat2 :landmarks1 :landmarks2];
     
@@ -119,38 +98,17 @@
     return swUI;
 }
 
-
-/**
- @brief Swaps faces for images with >= 2 faces. (Public)
- */
--(UIImage*)swapFacesMulti :(FSSwapStatus_t&)FSStatus
-{
-    FSStatus = FS_STATUS_OK;
-    UIImage* swUI = [self UIImageFromCVMat:mat1];
-    return swUI;
-}
-
-
-/**
- @brief Replaces the faces in image 2 with the face in image1.
- */
--(UIImage*)swapFacesOneToMany :(FSSwapStatus_t&)FSStatus
-{
-    FSStatus = FS_STATUS_OK;
-    // Convert UIImages to OpenCV Mat
-    // Convert back to UIImage
-    UIImage* swUI = [self UIImageFromCVMat:mat1];
-    
-    return swUI;
-}
-
 #pragma mark FaceSwap section
 
 /**
- @brief Main faceSwap function
+ @brief Swaps faces between img1 and img2.
+ @param img1 [in] Image 1, the face from this image will be inserted in img2.
+ @param img2 [in] Image 2, face face in image img1 will be inserted here.
+ @param points1 [in] Facial landmarks for image 1.
+ @param points2 [in] Facial landmarks for image 2.
+ @return an OpenCV Mat with the face swap result.
  */
--(cv::Mat)faceSwap:(cv::Mat)img1 :(cv::Mat)img2 :(std::vector<cv::Point2f>)points1 :(std::vector<cv::Point2f>)points2
-{
+-(cv::Mat)faceSwap:(cv::Mat)img1 :(cv::Mat)img2 :(std::vector<cv::Point2f>)points1 :(std::vector<cv::Point2f>)points2 {
     cv::Mat img1Warped = img2.clone();
     
     //convert Mat to float data type
@@ -201,33 +159,35 @@
     cv::fillConvexPoly(mask,&hull8U[0], (int)hull8U.size(), cv::Scalar(255,255,255));
     
     // Clone seamlessly.
-    cv::Rect r = cv::boundingRect(hull2);
     img1Warped.convertTo(img1Warped, CV_8UC3);
+    cv::Rect r = cv::boundingRect(hull2);
     cv::Mat img1WarpedSub = img1Warped(r);
-    cv::Mat img2Sub       = img2(r);
-    cv::Mat maskSub       = mask(r);
-    
+    cv::Mat img2Sub = img2(r);
+    cv::Mat maskSub = mask(r);
     cv::Point center(r.width/2, r.height/2);
-    
     cv::Mat output;
+    
     cv::seamlessClone(img1WarpedSub, img2Sub, maskSub, center, output, cv::NORMAL_CLONE);
     output.copyTo(img2(r));
     
     return img2;
 }
 
-
 /**
  @brief Warps and apha blends triangular regions from img1 and img2 to img
+ @param img1 [in] Image 1.
+ @param img2 [intout] Image 2.
+ @param t1 [in] Triangles that belong to img1.
+ @param t2 [in] Triangles that belong to img2.
  */
--(void)warpTriangle:(cv::Mat&)img1 :(cv::Mat&)img2 :(std::vector<cv::Point2f>&)t1 :(std::vector<cv::Point2f>&)t2
-{
+-(void)warpTriangle:(cv::Mat&)img1 :(cv::Mat&)img2 :(std::vector<cv::Point2f>&)t1 :(std::vector<cv::Point2f>&)t2 {
     cv::Rect r1 = cv::boundingRect(t1);
     cv::Rect r2 = cv::boundingRect(t2);
     
     // Offset points by left top corner of the respective rectangles
     std::vector<cv::Point2f> t1Rect, t2Rect;
     std::vector<cv::Point> t2RectInt;
+    
     for (int i = 0; i < 3; i++) {
         t1Rect.push_back( cv::Point2f( t1[i].x - r1.x, t1[i].y -  r1.y) );
         t2Rect.push_back( cv::Point2f( t2[i].x - r2.x, t2[i].y - r2.y) );
@@ -251,24 +211,27 @@
     img2(r2) = img2(r2) + img2Rect;
 }
 
-
 /**
- @brief Apply affine transform calculated using srcTri and dstTri to src
+ @brief Apply affine transform calculated using srcTri and dstTri to src.
+ @param warpImage [inout] Warps to this image.
+ @param src [in] Warps from this image.
+ @param srcTri [in] Triangles source.
+ @param dstTri [in] Triangles destination.
  */
--(void)applyAffineTransform:(cv::Mat&)warpImage :(cv::Mat&)src :(std::vector<cv::Point2f>&)srcTri :(std::vector<cv::Point2f>&)dstTri
-{
+-(void)applyAffineTransform:(cv::Mat&)warpImage :(cv::Mat&)src :(std::vector<cv::Point2f>&)srcTri :(std::vector<cv::Point2f>&)dstTri {
     // Given a pair of triangles, find the affine transform.
     cv::Mat warpMat = cv::getAffineTransform( srcTri, dstTri );
     // Apply the Affine Transform just found to the src image
     cv::warpAffine( src, warpImage, warpMat, warpImage.size(), cv::INTER_LINEAR, cv::BORDER_REFLECT_101);
 }
 
-
 /**
  @brief Calculates the Delaunay triangulation of a set of points.
+ @param rect [in] Rectangle.
+ @param points [in] Points.
+ @param delaunayTri [inout] Result of the triangulation.
  */
--(void)calculateDelaunayTriangles:(cv::Rect)rect :(std::vector<cv::Point2f>&)points :(std::vector<std::vector<int>>&)delaunayTri
-{
+-(void)calculateDelaunayTriangles:(cv::Rect)rect :(std::vector<cv::Point2f>&)points :(std::vector<std::vector<int>>&)delaunayTri {
     // Create an instance of Subdiv2D
     cv::Subdiv2D subdiv(rect);
     
@@ -288,59 +251,51 @@
         pt[2] = cv::Point2f(t[4], t[5 ]);
         
         if (rect.contains(pt[0]) && rect.contains(pt[1]) && rect.contains(pt[2])){
-            for (int j = 0; j < 3; j++)
-                for (size_t k = 0; k < points.size(); k++)
-                    if (std::abs(pt[j].x - points[k].x) < 1.0 && std::abs(pt[j].y - points[k].y) < 1)
+            for (int j = 0; j < 3; j++) {
+                for (size_t k = 0; k < points.size(); k++) {
+                    if (std::abs(pt[j].x - points[k].x) < 1.0 && std::abs(pt[j].y - points[k].y) < 1) {
                         ind[j] = (int)k;
-            
+                    }
+                }
+            }
             delaunayTri.push_back(ind);
         }
     }
 }
 
-
-/**
- @brief Debug function for plotting found landmarks
- */
--(void)drawPoints:(cv::Mat&)mat :(std::vector<std::vector<cv::Point2f>>)landmarks
-{
-    for (size_t i = 0; i < landmarks[0].size(); i++) {
-        cv::circle(mat, cv::Point((int)landmarks[0][i].x, (int)landmarks[0][i].y), 5, cv::Scalar(0,255,0));
-    }
-}
-
-
 # pragma mark Conversion section
-
 
 /**
  @brief Adjusts the size of input image.
+ @param img [in] The image to resize.
+ @return An OpenCV Mat with the result.
  */
--(cv::Mat)resizeImage:(cv::Mat)img
-{
+-(cv::Mat)resizeImage:(cv::Mat)img {
     int limit = 1500;
-    if (img.rows < limit || img.cols < limit) // Risky? Could one of them potentially be huge?
+    if (img.rows < limit || img.cols < limit) {
         return img;
-    
+    }
+        
     // Calculate ratio  to keep proportions
     float ratio = (float)img.rows / (float)img.cols;
-    
     cv::resize(img, img, cv::Size(limit, limit*ratio));
-    
     return img;
 }
 
-
 /**
- Converts UIImage to OpenCV Mat
- @brief http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
+ @brief Converts UIImage to OpenCV Mat
+ @param image [in] The image to convert.
+ @link http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
+ @return An OpenCV Mat with the converted image.
  */
-- (cv::Mat)cvMatFromUIImage:(UIImage *)image
-{
+- (cv::Mat)cvMatFromUIImage:(UIImage *)image {
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
     CGFloat cols = image.size.width;
     CGFloat rows = image.size.height;
     
+    // Grayscale
+    // cv::Mat cvMat(rows, cols, CV_8UC1); // 8 bits per component, 1 channels
+    // Color
     cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels (color channels + alpha)
     
     CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to data
@@ -358,41 +313,13 @@
     return cvMat;
 }
 
-
 /**
- @brief Converts UIImage to grayscale OpenCV Mat
- http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
+ @brief Converts an OpenCV Mat to a UIImage.
+ @param cvMat [in] An OpenCV Mat to convert.
+ @link http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
+ @return A UIIMage that can be used by iOS.
  */
-- (cv::Mat)cvMatGrayFromUIImage:(UIImage *)image
-{
-    CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
-    CGFloat cols = image.size.width;
-    CGFloat rows = image.size.height;
-    
-    cv::Mat cvMat(rows, cols, CV_8UC1); // 8 bits per component, 1 channels
-    
-    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to data
-                                                    cols,                       // Width of bitmap
-                                                    rows,                       // Height of bitmap
-                                                    8,                          // Bits per component
-                                                    cvMat.step[0],              // Bytes per row
-                                                    colorSpace,                 // Colorspace
-                                                    kCGImageAlphaNoneSkipLast |
-                                                    kCGBitmapByteOrderDefault); // Bitmap info flags
-    
-    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
-    CGContextRelease(contextRef);
-    
-    return cvMat;
-}
-
-
-/**
- @brief Converts OpenCV Mat to UIImage
- http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
- */
--(UIImage *)UIImageFromCVMat:(cv::Mat)cvMat
-{
+-(UIImage *)UIImageFromCVMat:(cv::Mat)cvMat {
     NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize()*cvMat.total()];
     CGColorSpaceRef colorSpace;
     
@@ -418,7 +345,6 @@
                                         kCGRenderingIntentDefault                   //intent
                                         );
     
-    
     // Getting UIImage from CGImage
     UIImage *finalImage = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
@@ -427,6 +353,5 @@
     
     return finalImage;
 }
-
 
 @end
