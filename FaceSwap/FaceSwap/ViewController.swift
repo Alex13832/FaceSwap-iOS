@@ -66,7 +66,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let imUtils = ImageUtilsWrapper()
         let swapped = imUtils.swap(im1, face2: im2, landmarks1: landmarks1, landmarks2: landmarks2)
-        
+
         imageView.image = swapped
     }
     
@@ -159,6 +159,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         for face in observations {
             addFaceLandmarksToImage(image: imTemporary, face)
             getLandmarksForFace(image: imTemporary, face)
+//            addFaceLandmarksToImage(image: imTemporary, face)
         }
     }
     
@@ -188,10 +189,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 
                 let xx = x + CGFloat(point.x) * w
                 let yy = y + CGFloat(point.y) * h
-                //lmkrs.append(CGPoint(x: xx, y: yy))
                 lmrks.append(Int(xx));
                 lmrks.append(Int(yy));
-                
             }
         }
         

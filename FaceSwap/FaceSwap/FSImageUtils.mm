@@ -36,6 +36,7 @@
 -(void)setImg1:(UIImage*) img
 {
     mat1 = [self cvMatFromUIImage:img];
+    cv::flip(mat1, mat1, 1);
     cv::cvtColor(mat1, mat1, cv::COLOR_RGB2BGR);
 }
 
@@ -46,6 +47,7 @@
 -(void)setImg2:(UIImage*) img
 {
     mat2 = [self cvMatFromUIImage:img];
+    cv::flip(mat2, mat2, 1);
     cv::cvtColor(mat2, mat2, cv::COLOR_RGB2BGR);
 }
 
@@ -110,6 +112,7 @@
     cv::Mat mat = [self faceSwap:mat1 :mat2 :landmarks1 :landmarks2];
     
     cv::cvtColor(mat, mat, cv::COLOR_BGR2RGB);
+    cv::flip(mat, mat, 1);
     // Convert back to UIImage
     UIImage* swUI = [self UIImageFromCVMat:mat];
     
