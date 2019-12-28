@@ -36,6 +36,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem id="j0B-dJ-Amu">
+                                        <barButtonItem key="leftBarButtonItem" enabled="NO" title="Item" image="square.and.arrow.up" catalog="system" id="Soz-KE-oix">
+                                            <connections>
+                                                <action selector="onShareButtonPressed:" destination="BYZ-38-t0r" id="QUV-Jh-qUi"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="SWAP" image="arrow.right" catalog="system" id="CDc-B1-2Yw">
                                             <connections>
                                                 <action selector="onSwapPressed:" destination="BYZ-38-t0r" id="FNF-Rx-TXj"/>
@@ -54,6 +59,7 @@
                     </view>
                     <connections>
                         <outlet property="imageView" destination="KuU-gA-Vu0" id="3gr-ue-SSr"/>
+                        <outlet property="shareButton" destination="Soz-KE-oix" id="ND9-uC-LYG"/>
                         <outlet property="swap_button" destination="CDc-B1-2Yw" id="elO-gr-Ksr"/>
                     </connections>
                 </viewController>
@@ -69,5 +75,7 @@
     </scenes>
     <resources>
         <image name="arrow.right" catalog="system" width="64" height="48"/>
+        <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
     </resources>
+    <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

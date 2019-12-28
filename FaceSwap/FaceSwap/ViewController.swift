@@ -14,6 +14,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var swap_button: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    
     var sequenceHandler = VNSequenceRequestHandler()
     var im1: UIImage!
     var im2: UIImage!
@@ -71,6 +73,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             } else if selected_index == 1 {
                 imageView.image = swapped1
             }
+            shareButton.isEnabled = true
         }
     }
     
@@ -88,11 +91,30 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     /**
+     Opens a menu with possible share actions such as save photo and assign to contact.
+     - parameter sender: UIBarButtonItem
+     */
+    @IBAction func onShareButtonPressed(_ sender: UIBarButtonItem) {
+        var im: UIImage!
+        
+        if selected_index == 0 {
+            im = im1
+        } else if selected_index == 1 {
+            im = im2
+        }
+        
+        if let image = im {
+            let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+            present(vc, animated: true)
+        }
+    }
+    
+    /**
      Opens the camera roll and gets the selected image.
      - parameter picker: UIImagePickerController
      */
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
+        shareButton.isEnabled = false
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! NSString
         
         if mediaType.isEqual(to: kUTTypeImage as String) {
