@@ -243,7 +243,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
         }
         */
-        
         if currentImage == 1 {
             landmarks1 = lmrks
         } else if currentImage == 2 {
