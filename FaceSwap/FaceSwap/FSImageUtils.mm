@@ -54,8 +54,7 @@
  */
 - (void)setLandmarks1:(NSArray *)landmarks {
     int x, y;
-    for(int i=0; i<[landmarks count]; i+=2)
-    {
+    for(int i=0; i<[landmarks count]; i+=2) {
         x = [((NSNumber*)[landmarks objectAtIndex:i]) intValue];
         y = [((NSNumber*)[landmarks objectAtIndex:i+1]) intValue];
         cv::Point2f pt(x, y);
