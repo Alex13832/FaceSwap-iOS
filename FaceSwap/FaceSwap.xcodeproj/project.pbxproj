@@ -70,19 +70,19 @@
 		1175CD4623AFD4AC005A02DF /* FaceSwap */ = {
 			isa = PBXGroup;
 			children = (
-				1175CD6623B13D0F005A02DF /* opencv2.framework */,
 				1175CD4723AFD4AC005A02DF /* AppDelegate.swift */,
-				1175CD4923AFD4AC005A02DF /* SceneDelegate.swift */,
-				1175CD4D23AFD4AC005A02DF /* Main.storyboard */,
-				1175CD4B23AFD4AC005A02DF /* ViewController.swift */,
 				1175CD5023AFD4AE005A02DF /* Assets.xcassets */,
-				1175CD5223AFD4AE005A02DF /* LaunchScreen.storyboard */,
-				1175CD5523AFD4AE005A02DF /* Info.plist */,
 				1175CD5F23B13000005A02DF /* FaceSwap-Bridging-Header.h */,
-				1175CD7023B153FA005A02DF /* ImageUtilsWrapper.mm */,
-				1175CD7223B15431005A02DF /* ImageUtilsWrapper.hpp */,
-				1175CD7323B1591E005A02DF /* FSImageUtils.mm */,
 				1175CD7523B15938005A02DF /* FSImageUtils.hpp */,
+				1175CD7323B1591E005A02DF /* FSImageUtils.mm */,
+				1175CD7223B15431005A02DF /* ImageUtilsWrapper.hpp */,
+				1175CD7023B153FA005A02DF /* ImageUtilsWrapper.mm */,
+				1175CD5523AFD4AE005A02DF /* Info.plist */,
+				1175CD5223AFD4AE005A02DF /* LaunchScreen.storyboard */,
+				1175CD4D23AFD4AC005A02DF /* Main.storyboard */,
+				1175CD6623B13D0F005A02DF /* opencv2.framework */,
+				1175CD4923AFD4AC005A02DF /* SceneDelegate.swift */,
+				1175CD4B23AFD4AC005A02DF /* ViewController.swift */,
 			);
 			path = FaceSwap;
 			sourceTree = "<group>";

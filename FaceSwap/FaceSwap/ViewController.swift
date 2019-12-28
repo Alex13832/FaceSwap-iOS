@@ -75,6 +75,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     /**
+     Listens for segment (button) change.
+     - parameter sender: UISegmentedControl
+     */
+    @IBAction func onSegmentChange(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            imageView.image = im1
+        } else if sender.selectedSegmentIndex == 1 {
+            imageView.image = im2
+        }
+        selected_index = sender.selectedSegmentIndex
+    }
+    
+    /**
      Opens the camera roll and gets the selected image.
      - parameter picker: UIImagePickerController
      */
@@ -106,19 +119,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
      */
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    /**
-     Listens for segment (button) change.
-     - parameter sender: UISegmentedControl
-     */
-    @IBAction func onSegmentChange(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            imageView.image = im1
-        } else if sender.selectedSegmentIndex == 1 {
-            imageView.image = im2
-        }
-        selected_index = sender.selectedSegmentIndex
     }
     
     /**
