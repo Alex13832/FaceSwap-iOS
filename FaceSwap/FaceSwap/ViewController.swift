@@ -73,6 +73,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             } else if selected_index == 1 {
                 imageView.image = swapped1
             }
+            
             shareButton.isEnabled = true
         }
     }
@@ -195,6 +196,42 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let x = face.boundingBox.origin.x * image.size.width
         let y = face.boundingBox.origin.y * image.size.height
         
+        // Make left eyebrow coordinates a little higher
+        if let landmarks = face.landmarks?.leftEyebrow {
+            for i in 0...landmarks.pointCount - 1 {
+                let point = landmarks.normalizedPoints[i]
+                
+                let xx = x + CGFloat(point.x) * w
+                let yy = (y + CGFloat(point.y) * h) * 0.85
+                lmrks.append(Int(xx));
+                lmrks.append(Int(yy));
+            }
+        }
+        
+        // Make right eyebrow coordinates a little higher
+        if let landmarks = face.landmarks?.rightEyebrow {
+            for i in 0...landmarks.pointCount - 1 {
+                let point = landmarks.normalizedPoints[i]
+                
+                let xx = x + CGFloat(point.x) * w
+                let yy = (y + CGFloat(point.y) * h) * 0.85
+                lmrks.append(Int(xx));
+                lmrks.append(Int(yy));
+            }
+        }
+        
+        // No need of all coordinates
+        if let landmarks = face.landmarks?.faceContour {
+            for i in stride(from: 0, to: landmarks.pointCount-1, by: 2) {
+                let point = landmarks.normalizedPoints[i]
+                
+                let xx = x + CGFloat(point.x) * w
+                let yy = y + CGFloat(point.y) * h
+                lmrks.append(Int(xx));
+                lmrks.append(Int(yy));
+            }
+        }
+        /*
         if let landmarks = face.landmarks?.allPoints {
             for i in 0...landmarks.pointCount - 1 {
                 let point = landmarks.normalizedPoints[i]
@@ -205,6 +242,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 lmrks.append(Int(yy));
             }
         }
+        */
         
         if currentImage == 1 {
             landmarks1 = lmrks
