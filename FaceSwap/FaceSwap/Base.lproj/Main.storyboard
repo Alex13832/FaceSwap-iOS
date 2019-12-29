@@ -69,7 +69,7 @@
                         <outlet property="imageView" destination="KuU-gA-Vu0" id="3gr-ue-SSr"/>
                         <outlet property="regretButton" destination="5r6-D6-idu" id="6U8-Ol-Hc2"/>
                         <outlet property="shareButton" destination="Soz-KE-oix" id="ND9-uC-LYG"/>
-                        <outlet property="swap_button" destination="CDc-B1-2Yw" id="elO-gr-Ksr"/>
+                        <outlet property="swapButton" destination="CDc-B1-2Yw" id="wC2-l7-u47"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

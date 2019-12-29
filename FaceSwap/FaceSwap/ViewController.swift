@@ -15,7 +15,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var swapButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
-    @IBOutlet weak var regretButton: UIButton!
+    @IBOutlet weak var regretButton: UIButton!    
     
     var sequenceHandler = VNSequenceRequestHandler()
     var im1: UIImage!
