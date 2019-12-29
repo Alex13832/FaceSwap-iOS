@@ -15,10 +15,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var swap_button: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var regretButton: UIButton!
     
     var sequenceHandler = VNSequenceRequestHandler()
     var im1: UIImage!
+    var im1Backup: UIImage!
     var im2: UIImage!
+    var im2Backup: UIImage!
     var imTemporary: UIImage!
     var currentImage = 0
     var selected_index = 0
@@ -75,6 +78,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
             
             shareButton.isEnabled = true
+            regretButton.isHidden = false
+            regretButton.isEnabled = true
         }
     }
     
@@ -111,6 +116,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     /**
+     Replaces the result images with the original input.
+     - parameter sender: UIButton
+     */
+    @IBAction func onRegretPressed(_ sender: UIButton) {
+        im1 = im1Backup
+        im2 = im2Backup
+        
+        if selected_index == 0 {
+            imageView.image = im1
+        } else if selected_index == 1 {
+            imageView.image = im2
+        }
+        
+        regretButton.isHidden = true
+        regretButton.isEnabled = false
+    }
+    
+    
+    /**
      Opens the camera roll and gets the selected image.
      - parameter picker: UIImagePickerController
      */
@@ -124,8 +148,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             if selected_index == 0 {
                 im1 = image
+                im1Backup = image
             } else if selected_index == 1 {
                 im2 = image
+                im2Backup = image
             }
             
             if (im1 != nil) && (im2 != nil) {
