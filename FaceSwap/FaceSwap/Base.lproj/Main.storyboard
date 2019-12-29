@@ -16,31 +16,44 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KuU-gA-Vu0">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                             </imageView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Nha-M8-xcm">
-                                <rect key="frame" x="142" y="831" width="131" height="31"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                </segments>
-                                <connections>
-                                    <action selector="onSegmentChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="0af-If-A4i"/>
-                                </connections>
-                            </segmentedControl>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m43-kB-mKd">
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m43-kB-mKd">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <items>
                                     <navigationItem id="j0B-dJ-Amu">
-                                        <barButtonItem key="leftBarButtonItem" enabled="NO" title="Item" image="square.and.arrow.up" catalog="system" id="Soz-KE-oix">
+                                        <nil key="title"/>
+                                        <leftBarButtonItems>
+                                            <barButtonItem enabled="NO" title="Item" image="square.and.arrow.up" catalog="system" id="Soz-KE-oix">
+                                                <connections>
+                                                    <action selector="onShareButtonPressed:" destination="BYZ-38-t0r" id="QUV-Jh-qUi"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem style="plain" id="NgT-pQ-NmJ">
+                                                <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5r6-D6-idu">
+                                                    <rect key="frame" x="62" y="11" width="21" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="onRegretPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="joa-VF-dbq"/>
+                                                    </connections>
+                                                </button>
+                                            </barButtonItem>
+                                        </leftBarButtonItems>
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Nha-M8-xcm">
+                                            <rect key="frame" x="142" y="6" width="131" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                            <segments>
+                                                <segment title="First"/>
+                                                <segment title="Second"/>
+                                            </segments>
                                             <connections>
-                                                <action selector="onShareButtonPressed:" destination="BYZ-38-t0r" id="QUV-Jh-qUi"/>
+                                                <action selector="onSegmentChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="0af-If-A4i"/>
                                             </connections>
-                                        </barButtonItem>
+                                        </segmentedControl>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="SWAP" image="arrow.right" catalog="system" id="CDc-B1-2Yw">
                                             <connections>
                                                 <action selector="onSwapPressed:" destination="BYZ-38-t0r" id="FNF-Rx-TXj"/>
@@ -49,14 +62,6 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5r6-D6-idu">
-                                <rect key="frame" x="33" y="834" width="21" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
-                                <connections>
-                                    <action selector="onRegretPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="joa-VF-dbq"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <gestureRecognizers/>
