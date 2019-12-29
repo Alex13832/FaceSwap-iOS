@@ -13,7 +13,7 @@ import Vision
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var swap_button: UIBarButtonItem!
+    @IBOutlet weak var swapButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var regretButton: UIButton!
     
@@ -24,7 +24,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var im2Backup: UIImage!
     var imTemporary: UIImage!
     var currentImage = 0
-    var selected_index = 0
+    var selectedIndex = 0
     var landmarks1:[Int] = []
     var landmarks2:[Int] = []
     
@@ -71,9 +71,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             im1 = swapped2
             im2 = swapped1
             
-            if selected_index == 0 {
+            if selectedIndex == 0 {
                 imageView.image = swapped2
-            } else if selected_index == 1 {
+            } else if selectedIndex == 1 {
                 imageView.image = swapped1
             }
             
@@ -93,7 +93,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         } else if sender.selectedSegmentIndex == 1 {
             imageView.image = im2
         }
-        selected_index = sender.selectedSegmentIndex
+        selectedIndex = sender.selectedSegmentIndex
     }
     
     /**
@@ -103,9 +103,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func onShareButtonPressed(_ sender: UIBarButtonItem) {
         var im: UIImage!
         
-        if selected_index == 0 {
+        if selectedIndex == 0 {
             im = im1
-        } else if selected_index == 1 {
+        } else if selectedIndex == 1 {
             im = im2
         }
         
@@ -123,9 +123,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         im1 = im1Backup
         im2 = im2Backup
         
-        if selected_index == 0 {
+        if selectedIndex == 0 {
             imageView.image = im1
-        } else if selected_index == 1 {
+        } else if selectedIndex == 1 {
             imageView.image = im2
         }
         
@@ -146,16 +146,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
             imageView.image = image
             
-            if selected_index == 0 {
+            if selectedIndex == 0 {
                 im1 = image
                 im1Backup = image
-            } else if selected_index == 1 {
+            } else if selectedIndex == 1 {
                 im2 = image
                 im2Backup = image
             }
             
             if (im1 != nil) && (im2 != nil) {
-                swap_button.isEnabled = true
+                swapButton.isEnabled = true
             }
         }
         
