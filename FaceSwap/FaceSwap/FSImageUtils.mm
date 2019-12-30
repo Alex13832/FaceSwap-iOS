@@ -12,12 +12,12 @@
 #import <string>
 
 #import "opencv2/photo.hpp"
-#import "opencv2/imgproc.hpp"
-#import "opencv2/imgcodecs.hpp"
-#import "opencv2/highgui.hpp"
-#import "opencv2/core.hpp"
+//#import "opencv2/imgproc.hpp"
+//#import "opencv2/imgcodecs.hpp"
+//#import "opencv2/highgui.hpp"
+//#import "opencv2/core.hpp"
 
-#define SIZE_LIMIT 20000
+#define SIZE_LIMIT 2000
 
 @implementation FSImageUtils {}
 
@@ -260,23 +260,6 @@
 }
 
 # pragma mark Conversion section
-
-/**
- @brief Adjusts the size of input image.
- @param img [in] The image to resize.
- @return An OpenCV Mat with the result.
- */
--(cv::Mat)resizeImage:(cv::Mat)img {
-    int limit = 1500;
-    if (img.rows < limit || img.cols < limit) {
-        return img;
-    }
-        
-    // Calculate ratio  to keep proportions
-    float ratio = (float)img.rows / (float)img.cols;
-    cv::resize(img, img, cv::Size(limit, limit*ratio));
-    return img;
-}
 
 /**
  @brief Converts UIImage to OpenCV Mat

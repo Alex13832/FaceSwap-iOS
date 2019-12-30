@@ -37,5 +37,4 @@ typedef enum FSSwapStatus_t
 
 @end
 
-
 #endif /* FSImageUtils_hpp */

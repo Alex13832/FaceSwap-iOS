@@ -141,11 +141,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
      */
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         shareButton.isEnabled = false
+        regretButton.isHidden = true
+        regretButton.isEnabled = false
+        
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! NSString
         
         if mediaType.isEqual(to: kUTTypeImage as String) {
-            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            var image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
             imageView.image = image
+            
+            // Resize image if it's to big
+            if Int(image.size.height) > 1300 || Int(image.size.width) > 1300 {
+                image = self.resizeImage(image: image)
+            }
             
             if selectedIndex == 0 {
                 im1 = image
@@ -258,22 +266,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 lmrks.append(Int(yy));
             }
         }
-        /*
-        if let landmarks = face.landmarks?.allPoints {
-            for i in 0...landmarks.pointCount - 1 {
-                let point = landmarks.normalizedPoints[i]
-                
-                let xx = x + CGFloat(point.x) * w
-                let yy = y + CGFloat(point.y) * h
-                lmrks.append(Int(xx));
-                lmrks.append(Int(yy));
-            }
-        }
-        */
+
         if currentImage == 1 {
             landmarks1 = lmrks
         } else if currentImage == 2 {
             landmarks2 = lmrks
         }
+    }
+    
+    /**
+     Changes the size of the input image.
+     - parameter image: The image to resize.
+     - returns: A resized version of image.
+     - link: https://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
+     */
+     func resizeImage(image: UIImage) -> UIImage {
+        // Calculate new size
+        let size = image.size
+        let ratio = size.height / size.width
+        let newSize = CGSize(width: 1300, height: 1300*ratio);
+        print(newSize)
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+        // Resize
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage!
     }
 }
