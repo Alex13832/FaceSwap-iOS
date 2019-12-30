@@ -15,7 +15,9 @@ Previous implementation depended on [dlib](http://dlib.net), but it was a bit tr
 ## Dependencies
 The app depends on OpenCV. It should be straightforward to add the OpenCV library to Xcode. The code that depend on OpenCV is Objective-C++ (.mm). There is a bridging-header provided not to expose C++ code to Swift.
 
-Note that the OpenCV framework has to be imported to Xcode in order to include it in the project. Unzip `opencv2.framework.zip`, drag it to Xcode and select "Copy items if needed".
+Due to OpenCV's size, the framework was not pushed to this repository. Download it from [here](https://opencv.org/releases/), in this project `OpenCV-3.4.9` is used. Unzip `opencv2.framework.zip`, drag it to Xcode and select "Copy items if needed". The app should work with previous releases, which may reduce the app size.
+
+<img src="./images/opencv.png" width="1000"/>
 
 To make Xcode understand that the framework exists, see the images below:
 
