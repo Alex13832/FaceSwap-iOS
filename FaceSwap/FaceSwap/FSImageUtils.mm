@@ -12,6 +12,7 @@
 #import <string>
 
 #import "opencv2/photo.hpp"
+#import <opencv2/imgcodecs/ios.h>
 //#import "opencv2/imgproc.hpp"
 //#import "opencv2/imgcodecs.hpp"
 //#import "opencv2/highgui.hpp"
@@ -33,7 +34,7 @@
  @param img [in] Image 1.
  */
 -(void)setImg1:(UIImage*) img {
-    mat1 = [self cvMatFromUIImage:img];
+    UIImageToMat(img, mat1);
     cv::flip(mat1, mat1, 1);
     cv::cvtColor(mat1, mat1, cv::COLOR_RGB2BGR);
 }
@@ -43,7 +44,7 @@
  @param img [in] image 2.
  */
 -(void)setImg2:(UIImage*) img {
-    mat2 = [self cvMatFromUIImage:img];
+    UIImageToMat(img, mat2);
     cv::flip(mat2, mat2, 1);
     cv::cvtColor(mat2, mat2, cv::COLOR_RGB2BGR);
 }
@@ -89,9 +90,7 @@
     cv::cvtColor(mat, mat, cv::COLOR_BGR2RGB);
     cv::flip(mat, mat, 1);
     // Convert back to UIImage
-    UIImage* swUI = [self UIImageFromCVMat:mat];
-    
-    return swUI;
+    return MatToUIImage(mat);
 }
 
 #pragma mark FaceSwap section
@@ -257,80 +256,6 @@
             delaunayTri.push_back(ind);
         }
     }
-}
-
-# pragma mark Conversion section
-
-/**
- @brief Converts UIImage to OpenCV Mat
- @param image [in] The image to convert.
- @link http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
- @return An OpenCV Mat with the converted image.
- */
-- (cv::Mat)cvMatFromUIImage:(UIImage *)image {
-    CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
-    CGFloat cols = image.size.width;
-    CGFloat rows = image.size.height;
-    
-    // Grayscale
-    // cv::Mat cvMat(rows, cols, CV_8UC1); // 8 bits per component, 1 channels
-    // Color
-    cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 4 channels (color channels + alpha)
-    
-    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to data
-                                                    cols,                       // Width of bitmap
-                                                    rows,                       // Height of bitmap
-                                                    8,                          // Bits per component
-                                                    cvMat.step[0],              // Bytes per row
-                                                    colorSpace,                 // Colorspace
-                                                    kCGImageAlphaNoneSkipLast |
-                                                    kCGBitmapByteOrderDefault); // Bitmap info flags
-    
-    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
-    CGContextRelease(contextRef);
-    
-    return cvMat;
-}
-
-/**
- @brief Converts an OpenCV Mat to a UIImage.
- @param cvMat [in] An OpenCV Mat to convert.
- @link http://docs.opencv.org/2.4/doc/tutorials/ios/image_manipulation/image_manipulation.html
- @return A UIIMage that can be used by iOS.
- */
--(UIImage *)UIImageFromCVMat:(cv::Mat)cvMat {
-    NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize()*cvMat.total()];
-    CGColorSpaceRef colorSpace;
-    
-    if (cvMat.elemSize() == 1) {
-        colorSpace = CGColorSpaceCreateDeviceGray();
-    } else {
-        colorSpace = CGColorSpaceCreateDeviceRGB();
-    }
-    
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
-    
-    // Creating CGImage from cv::Mat
-    CGImageRef imageRef = CGImageCreate(cvMat.cols,                                 //width
-                                        cvMat.rows,                                 //height
-                                        8,                                          //bits per component
-                                        8 * cvMat.elemSize(),                       //bits per pixel
-                                        cvMat.step[0],                              //bytesPerRow
-                                        colorSpace,                                 //colorspace
-                                        kCGImageAlphaNone|kCGBitmapByteOrderDefault,// bitmap info
-                                        provider,                                   //CGDataProviderRef
-                                        NULL,                                       //decode
-                                        false,                                      //should interpolate
-                                        kCGRenderingIntentDefault                   //intent
-                                        );
-    
-    // Getting UIImage from CGImage
-    UIImage *finalImage = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    CGDataProviderRelease(provider);
-    CGColorSpaceRelease(colorSpace);
-    
-    return finalImage;
 }
 
 @end
