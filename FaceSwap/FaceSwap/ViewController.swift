@@ -15,7 +15,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var swapButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
-    @IBOutlet weak var regretButton: UIButton!    
+    @IBOutlet weak var regretButton: UIButton!
+    
+    let imUtilsWrapper =  ImageUtilsWrapper()
     
     var sequenceHandler = VNSequenceRequestHandler()
     var im1: UIImage!
@@ -64,9 +66,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         detectLandmarks(image: im2)
         
         if landmarks1.count > 0 && landmarks2.count > 0 {
-            let imUtils = ImageUtilsWrapper()
-            let swapped1 = imUtils.swap(im1, face2: im2, landmarks1: landmarks1, landmarks2: landmarks2)
-            let swapped2 = imUtils.swap(im2, face2: im1, landmarks1: landmarks2, landmarks2: landmarks1)
+            let swapped1 = imUtilsWrapper.swap(im1, face2: im2, landmarks1: landmarks1, landmarks2: landmarks2)
+            let swapped2 = imUtilsWrapper.swap(im2, face2: im1, landmarks1: landmarks2, landmarks2: landmarks1)
             
             im1 = swapped2
             im2 = swapped1
