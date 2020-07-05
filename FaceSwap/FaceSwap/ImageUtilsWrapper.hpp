@@ -3,7 +3,7 @@
 //  FaceSwap
 //
 //  Created by Alexander Karlsson on 2019-12-23.
-//  Copyright © 2019 Alexander Karlsson. All rights reserved.
+//  Copyright © 2020 Alexander Karlsson. All rights reserved.
 //
 
 #ifndef ImageUtilsWrapper_h

@@ -3,7 +3,7 @@
 //  FaceSwap
 //
 //  Created by Alexander Karlsson on 2016-12-31.
-//  Copyright © 2016-2019 Alexander Karlsson. All rights reserved.
+//  Copyright © 2016-2020 Alexander Karlsson. All rights reserved.
 //
 
 #import "FSImageUtils.hpp"
@@ -13,12 +13,6 @@
 
 #import "opencv2/photo.hpp"
 #import <opencv2/imgcodecs/ios.h>
-//#import "opencv2/imgproc.hpp"
-//#import "opencv2/imgcodecs.hpp"
-//#import "opencv2/highgui.hpp"
-//#import "opencv2/core.hpp"
-
-#define SIZE_LIMIT 2000
 
 @implementation FSImageUtils {}
 
@@ -29,30 +23,18 @@
 
 #pragma mark Global functions
 
-/**
- @brief Sets image 1.
- @param img [in] Image 1.
- */
 -(void)setImg1:(UIImage*) img {
     UIImageToMat(img, mat1);
     cv::flip(mat1, mat1, 1);
     cv::cvtColor(mat1, mat1, cv::COLOR_RGB2BGR);
 }
 
-/**
- @brief Sets the secondary image.
- @param img [in] image 2.
- */
 -(void)setImg2:(UIImage*) img {
     UIImageToMat(img, mat2);
     cv::flip(mat2, mat2, 1);
     cv::cvtColor(mat2, mat2, cv::COLOR_RGB2BGR);
 }
 
-/**
- @brief Sets the landmarks for image 1.
- @param landmarks [in] Facial landmarks for image 1.
- */
 - (void)setLandmarks1:(NSArray *)landmarks {
     int x, y;
     for(int i=0; i<[landmarks count]; i+=2) {
@@ -63,10 +45,6 @@
     }
 }
 
-/**
- @brief Sets the landmarks for image 2.
- @param landmarks [in] Facial landmarks for image 2.
- */
 - (void)setLandmarks2:(NSArray *)landmarks {
     int x, y;
     for(int i=0; i<[landmarks count]; i+=2) {
@@ -77,14 +55,8 @@
     }
 }
 
-/**
- @brief Swaps faces of two selfie images. (Public)
- The face in img1 will be pasted over img2's face.
- @param FSStatus [out] return status
- @return an UIImage with face swap result.
- */
--(UIImage*)swapFaces :(FSSwapStatus_t&)FSStatus {
-    FSStatus = FS_STATUS_OK;
+-(UIImage*)swapFaces :(SwapStatus&)FSStatus {
+    FSStatus = SwapStatus::OK;
     cv::Mat mat = [self faceSwap:mat1 :mat2 :landmarks1 :landmarks2];
     
     cv::cvtColor(mat, mat, cv::COLOR_BGR2RGB);
