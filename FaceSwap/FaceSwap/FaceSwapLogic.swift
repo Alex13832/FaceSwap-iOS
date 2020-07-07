@@ -13,49 +13,60 @@ import Vision
 
 class FaceSwapLogic {
     
-    var maxSize: Int
+    let imUtilsWrapper =  ImageUtilsWrapper()
+    
     var im1: UIImage!
-    var im1Backup: UIImage!
     var im2: UIImage!
-    var im2Backup: UIImage!
     var imTemporary: UIImage!
     var currentImage = 0
-    var selectedIndex = 0
     var landmarks1:[Int] = []
     var landmarks2:[Int] = []
     
-    
-    init(maxSizeIm: Int) {
-        maxSize = maxSizeIm;
-        im1 = nil
-        im2 = nil
-        im1Backup = nil
-        im2Backup = nil
+
+    /**
+     Returns the first image of the face swap result.
+     - Returns: The first image of the resutl.
+     */
+    func getResultImage1() -> UIImage {
+        return self.im1
     }
     
-    func getIm1() -> UIImage {
-        return im1
+    /**
+     Returns the second image of the face swap result.
+     - Returns: The second image of the result.
+     */
+    func getResultImage2() -> UIImage {
+        return self.im2
     }
     
-    func getIm2() -> UIImage {
-        return im2
-    }
-    
-    func setIm1(img1: UIImage) -> Void {
-        im1 = img1
-    }
-    
-    func setIm2(img2: UIImage) -> Void {
-        im2 = img2
-    }
-    
-    func swapFaces() -> UIImage {
-        return im1
+    /**
+    Swaps the faces in the input images.
+     - Parameter im1: First image input.
+     - Parameter im2: Second image input.
+     - Returns: True if the swapping was ok, False if too few facial landmarks was found.
+     */
+    func swapFaces(im1: UIImage, im2: UIImage) -> Bool {
+        imTemporary = im1
+        currentImage = 1
+        detectLandmarks(image: im1)
+        
+        imTemporary = im2
+        currentImage = 2
+        detectLandmarks(image: im2)
+        
+        if landmarks1.count < 5 || landmarks2.count < 5 {
+            return false;
+        }
+        
+        self.im1 = imUtilsWrapper.swap(im1, face2: im2, landmarks1: landmarks1, landmarks2: landmarks2)
+        self.im2 = imUtilsWrapper.swap(im2, face2: im1, landmarks1: landmarks2, landmarks2: landmarks1)
+        
+        return true;
     }
     
     /**
      Detects facial landmarks for an image.
-     - parameter image: The image to detect landmarks in.
+     - Parameter image: The image to detect landmarks in.
      */
     func detectLandmarks(image: UIImage) -> Void {
         let faceLandmarksRequest = VNDetectFaceLandmarksRequest(completionHandler: self.handleFaceFeatures)
@@ -71,8 +82,8 @@ class FaceSwapLogic {
     
     /**
      Handles landmarks for a face.
-     - parameter request: VNRequest
-     - parameter error: Error
+     - Parameter request: VNRequest
+     - Parameter error: Error
      */
     func handleFaceFeatures(request: VNRequest, error: Error?) {
         guard let observations = request.results as? [VNFaceObservation] else {
@@ -86,8 +97,8 @@ class FaceSwapLogic {
     
     /**
      Extracts tthe facial landmarks for one face observation.
-     - parameter image: The image to get landmarks for.
-     - parameter face: The data structure that contains the landmarks.
+     - Parameter image: The image to get landmarks for.
+     - Parameter face: The data structure that contains the landmarks.
      */
     func getLandmarksForFace(image: UIImage, _ face: VNFaceObservation) -> Void {
         var lmrks:[Int] = []
@@ -150,8 +161,8 @@ class FaceSwapLogic {
     
     /**
      Changes the size of the input image.
-     - parameter image: The image to resize.
-     - returns: A resized version of image.
+     - Parameter image: The image to resize.
+     - Returns: A resized version of image.
      - link: https://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
      */
     func resizeImage(image: UIImage) -> UIImage {
