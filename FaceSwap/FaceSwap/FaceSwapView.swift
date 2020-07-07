@@ -10,14 +10,15 @@ import UIKit
 import MobileCoreServices
 import Vision
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class FaceSwapView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var swapButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var regretButton: UIButton!
-    
+            
     let imUtilsWrapper =  ImageUtilsWrapper()
+    let faceSwapLogic = FaceSwapLogic(maxSizeIm: 1300)
     
     var sequenceHandler = VNSequenceRequestHandler()
     var im1: UIImage!
@@ -32,7 +33,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
     
     /**
@@ -152,7 +152,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             // Resize image if it's to big
             if Int(image.size.height) > 1300 || Int(image.size.width) > 1300 {
-                image = self.resizeImage(image: image)
+                image = faceSwapLogic.resizeImage(image: image)
             }
             
             if selectedIndex == 0 {
@@ -272,28 +272,5 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         } else if currentImage == 2 {
             landmarks2 = lmrks
         }
-    }
-    
-    /**
-     Changes the size of the input image.
-     - parameter image: The image to resize.
-     - returns: A resized version of image.
-     - link: https://stackoverflow.com/questions/31314412/how-to-resize-image-in-swift
-     */
-     func resizeImage(image: UIImage) -> UIImage {
-        // Calculate new size
-        let size = image.size
-        let ratio = size.height / size.width
-        let newSize = CGSize(width: 1300, height: 1300*ratio);
-        print(newSize)
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
-        // Resize
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return newImage!
     }
 }

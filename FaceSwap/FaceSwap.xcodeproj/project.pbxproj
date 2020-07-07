@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1100AFD624B25D380097B87B /* FaceSwapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100AFD524B25D380097B87B /* FaceSwapTests.swift */; };
+		1100AFE224B3A80B0097B87B /* FaceSwapLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100AFE124B3A80B0097B87B /* FaceSwapLogic.swift */; };
 		1175CD4823AFD4AC005A02DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD4723AFD4AC005A02DF /* AppDelegate.swift */; };
 		1175CD4A23AFD4AC005A02DF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD4923AFD4AC005A02DF /* SceneDelegate.swift */; };
-		1175CD4C23AFD4AC005A02DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD4B23AFD4AC005A02DF /* ViewController.swift */; };
+		1175CD4C23AFD4AC005A02DF /* FaceSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD4B23AFD4AC005A02DF /* FaceSwapView.swift */; };
 		1175CD4F23AFD4AC005A02DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1175CD4D23AFD4AC005A02DF /* Main.storyboard */; };
 		1175CD5123AFD4AE005A02DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1175CD5023AFD4AE005A02DF /* Assets.xcassets */; };
 		1175CD5423AFD4AE005A02DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1175CD5223AFD4AE005A02DF /* LaunchScreen.storyboard */; };
@@ -18,11 +20,25 @@
 		11C05B4123BA91FD0039A45D /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C05B4023BA91FD0039A45D /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1100AFD824B25D380097B87B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1175CD3C23AFD4AC005A02DF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1175CD4323AFD4AC005A02DF;
+			remoteInfo = FaceSwap;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1100AFD324B25D380097B87B /* FaceSwapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceSwapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1100AFD524B25D380097B87B /* FaceSwapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSwapTests.swift; sourceTree = "<group>"; };
+		1100AFD724B25D380097B87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1100AFE124B3A80B0097B87B /* FaceSwapLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSwapLogic.swift; sourceTree = "<group>"; };
 		1175CD4423AFD4AC005A02DF /* FaceSwap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceSwap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1175CD4723AFD4AC005A02DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1175CD4923AFD4AC005A02DF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1175CD4B23AFD4AC005A02DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1175CD4B23AFD4AC005A02DF /* FaceSwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSwapView.swift; sourceTree = "<group>"; };
 		1175CD4E23AFD4AC005A02DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1175CD5023AFD4AE005A02DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1175CD5323AFD4AE005A02DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -37,6 +53,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1100AFD024B25D380097B87B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1175CD4123AFD4AC005A02DF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -48,10 +71,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1100AFD424B25D380097B87B /* FaceSwapTests */ = {
+			isa = PBXGroup;
+			children = (
+				1100AFD524B25D380097B87B /* FaceSwapTests.swift */,
+				1100AFD724B25D380097B87B /* Info.plist */,
+			);
+			path = FaceSwapTests;
+			sourceTree = "<group>";
+		};
 		1175CD3B23AFD4AC005A02DF = {
 			isa = PBXGroup;
 			children = (
 				1175CD4623AFD4AC005A02DF /* FaceSwap */,
+				1100AFD424B25D380097B87B /* FaceSwapTests */,
 				1175CD4523AFD4AC005A02DF /* Products */,
 				1175CD6823B14B30005A02DF /* Frameworks */,
 			);
@@ -61,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				1175CD4423AFD4AC005A02DF /* FaceSwap.app */,
+				1100AFD324B25D380097B87B /* FaceSwapTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,7 +114,8 @@
 				1175CD5223AFD4AE005A02DF /* LaunchScreen.storyboard */,
 				1175CD4D23AFD4AC005A02DF /* Main.storyboard */,
 				1175CD4923AFD4AC005A02DF /* SceneDelegate.swift */,
-				1175CD4B23AFD4AC005A02DF /* ViewController.swift */,
+				1175CD4B23AFD4AC005A02DF /* FaceSwapView.swift */,
+				1100AFE124B3A80B0097B87B /* FaceSwapLogic.swift */,
 			);
 			path = FaceSwap;
 			sourceTree = "<group>";
@@ -96,6 +131,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1100AFD224B25D380097B87B /* FaceSwapTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1100AFDC24B25D380097B87B /* Build configuration list for PBXNativeTarget "FaceSwapTests" */;
+			buildPhases = (
+				1100AFCF24B25D380097B87B /* Sources */,
+				1100AFD024B25D380097B87B /* Frameworks */,
+				1100AFD124B25D380097B87B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1100AFD924B25D380097B87B /* PBXTargetDependency */,
+			);
+			name = FaceSwapTests;
+			productName = FaceSwapTests;
+			productReference = 1100AFD324B25D380097B87B /* FaceSwapTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		1175CD4323AFD4AC005A02DF /* FaceSwap */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1175CD5823AFD4AE005A02DF /* Build configuration list for PBXNativeTarget "FaceSwap" */;
@@ -119,10 +172,14 @@
 		1175CD3C23AFD4AC005A02DF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Alexander Karlsson";
 				TargetAttributes = {
+					1100AFD224B25D380097B87B = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = 1175CD4323AFD4AC005A02DF;
+					};
 					1175CD4323AFD4AC005A02DF = {
 						CreatedOnToolsVersion = 11.3;
 						LastSwiftMigration = 1130;
@@ -143,11 +200,19 @@
 			projectRoot = "";
 			targets = (
 				1175CD4323AFD4AC005A02DF /* FaceSwap */,
+				1100AFD224B25D380097B87B /* FaceSwapTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1100AFD124B25D380097B87B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1175CD4223AFD4AC005A02DF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -161,19 +226,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1100AFCF24B25D380097B87B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1100AFD624B25D380097B87B /* FaceSwapTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1175CD4023AFD4AC005A02DF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1175CD4C23AFD4AC005A02DF /* ViewController.swift in Sources */,
+				1175CD4C23AFD4AC005A02DF /* FaceSwapView.swift in Sources */,
 				1175CD4823AFD4AC005A02DF /* AppDelegate.swift in Sources */,
 				1175CD7423B1591E005A02DF /* FSImageUtils.mm in Sources */,
 				1175CD4A23AFD4AC005A02DF /* SceneDelegate.swift in Sources */,
+				1100AFE224B3A80B0097B87B /* FaceSwapLogic.swift in Sources */,
 				1175CD7123B153FA005A02DF /* ImageUtilsWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1100AFD924B25D380097B87B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1175CD4323AFD4AC005A02DF /* FaceSwap */;
+			targetProxy = 1100AFD824B25D380097B87B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1175CD4D23AFD4AC005A02DF /* Main.storyboard */ = {
@@ -195,6 +277,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1100AFDA24B25D380097B87B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQ7G768LPT;
+				INFOPLIST_FILE = FaceSwapTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alex.FaceSwapTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FaceSwap.app/FaceSwap";
+			};
+			name = Debug;
+		};
+		1100AFDB24B25D380097B87B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQ7G768LPT;
+				INFOPLIST_FILE = FaceSwapTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alex.FaceSwapTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FaceSwap.app/FaceSwap";
+			};
+			name = Release;
+		};
 		1175CD5623AFD4AE005A02DF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -365,6 +489,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1100AFDC24B25D380097B87B /* Build configuration list for PBXNativeTarget "FaceSwapTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1100AFDA24B25D380097B87B /* Debug */,
+				1100AFDB24B25D380097B87B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1175CD3F23AFD4AC005A02DF /* Build configuration list for PBXProject "FaceSwap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
