@@ -19,15 +19,11 @@ class FaceSwapView: UIViewController, UIImagePickerControllerDelegate, UINavigat
             
     let imUtilsWrapper =  ImageUtilsWrapper()
     let faceSwapLogic = FaceSwapLogic()
-    let maxSize = 1300
     
-    var sequenceHandler = VNSequenceRequestHandler()
     var im1: UIImage!
     var im1Backup: UIImage!
     var im2: UIImage!
     var im2Backup: UIImage!
-    var imTemporary: UIImage!
-    var currentImage = 0
     var selectedIndex = 0
     
     override func viewDidLoad() {
@@ -137,13 +133,8 @@ class FaceSwapView: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! NSString
         
         if mediaType.isEqual(to: kUTTypeImage as String) {
-            var image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
             imageView.image = image
-            
-            // Resize image if it's to big
-            if Int(image.size.height) > maxSize || Int(image.size.width) > maxSize {
-                image = faceSwapLogic.resizeImage(image: image)
-            }
             
             if selectedIndex == 0 {
                 im1 = image
