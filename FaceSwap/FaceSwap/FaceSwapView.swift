@@ -57,7 +57,7 @@ class FaceSwapView: UIViewController, UIImagePickerControllerDelegate, UINavigat
 
         var msg: String!
         
-        if status == SwapStatus.sucess {
+        if status == SwapStatus.success {
             
             im1 = faceSwapLogic.getResultImage2()
             im2 = faceSwapLogic.getResultImage1()
@@ -77,7 +77,7 @@ class FaceSwapView: UIViewController, UIImagePickerControllerDelegate, UINavigat
             msg = "Face missing in input"
         }
         
-        if status != SwapStatus.sucess {
+        if status != SwapStatus.success {
             let dialogMessage = UIAlertController(title: "Face swap failed 🤦‍♂️", message: msg, preferredStyle: .alert)
             let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
                 print("Ok button tapped")

@@ -12,7 +12,7 @@ import MobileCoreServices
 import Vision
 
 public enum SwapStatus {
-    case sucess
+    case success
     case tooSmallInput
     case faceMissing
 }
@@ -76,14 +76,14 @@ class FaceSwapLogic {
         currentImage = 2
         detectLandmarks(image: im22)
         
-        if landmarks1.count < 5 || landmarks2.count < 5{
+        if landmarks1.count < 5 || landmarks2.count < 5{
             return SwapStatus.faceMissing
         }
         
         self.im1 = imUtilsWrapper.swap(im11, face2: im22, landmarks1: landmarks1, landmarks2: landmarks2)
         self.im2 = imUtilsWrapper.swap(im22, face2: im11, landmarks1: landmarks2, landmarks2: landmarks1)
         
-        return SwapStatus.sucess
+        return SwapStatus.success
     }
     
     /**

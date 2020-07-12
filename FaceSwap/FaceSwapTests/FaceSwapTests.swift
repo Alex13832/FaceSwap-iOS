@@ -24,7 +24,7 @@ class FaceSwapTests: XCTestCase {
         guard let im2 = UIImage(named: "queen") else { return }
         
         let res = sut.swapFaces(im1: im1, im2: im2)
-        XCTAssertEqual(res, SwapStatus.sucess)
+        XCTAssertEqual(res, SwapStatus.success)
         
         let im_res1 = sut.getResultImage1()
         XCTAssertGreaterThan(im_res1.size.width, 0)
@@ -40,8 +40,7 @@ class FaceSwapTests: XCTestCase {
             guard let im1 = UIImage(named: "arnold") else { return }
             guard let im2 = UIImage(named: "queen") else { return }
             let res = sut.swapFaces(im1: im1, im2: im2)
-            XCTAssertEqual(res, SwapStatus.sucess)
-            
+            XCTAssertEqual(res, SwapStatus.success)
         }
     }
     
@@ -67,7 +66,7 @@ class FaceSwapTests: XCTestCase {
         XCTAssertEqual(res, SwapStatus.tooSmallInput)
         
         res = sut.swapFaces(im1: im_face1_exact_width, im2: im_face2_exact_width)
-        XCTAssertEqual(res, SwapStatus.sucess)
+        XCTAssertEqual(res, SwapStatus.success)
     }
     
     func testMissingFace() throws {
