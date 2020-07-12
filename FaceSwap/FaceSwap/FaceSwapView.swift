@@ -16,7 +16,7 @@ class FaceSwapView: UIViewController, UIImagePickerControllerDelegate, UINavigat
     @IBOutlet weak var swapButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var regretButton: UIButton!
-            
+    
     let imUtilsWrapper =  ImageUtilsWrapper()
     let faceSwapLogic = FaceSwapLogic()
     
@@ -52,8 +52,12 @@ class FaceSwapView: UIViewController, UIImagePickerControllerDelegate, UINavigat
      - Parameter sender: Any
      */
     @IBAction func onSwapPressed(_ sender: Any) {
+        // TODO{alex011235} Fix exception catching, thrown in OpenCV.
+        let status = faceSwapLogic.swapFaces(im1: im1, im2: im2)
+
+        var msg: String!
         
-        if faceSwapLogic.swapFaces(im1: im1, im2: im2) {
+        if status == SwapStatus.sucess {
             
             im1 = faceSwapLogic.getResultImage2()
             im2 = faceSwapLogic.getResultImage1()
@@ -67,7 +71,22 @@ class FaceSwapView: UIViewController, UIImagePickerControllerDelegate, UINavigat
             shareButton.isEnabled = true
             regretButton.isHidden = false
             regretButton.isEnabled = true
+        } else if status == SwapStatus.tooSmallInput {
+            msg = "Too small input used, use higher resolution."
+        } else if status == SwapStatus.faceMissing {
+            msg = "Face missing in input"
         }
+        
+        if status != SwapStatus.sucess {
+            let dialogMessage = UIAlertController(title: "Face swap failed 🤦‍♂️", message: msg, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                print("Ok button tapped")
+            })
+            dialogMessage.addAction(ok)
+            self.present(dialogMessage, animated: true, completion: nil)
+        }
+        
+        
     }
     
     /**

@@ -11,6 +11,12 @@ import UIKit
 import MobileCoreServices
 import Vision
 
+public enum SwapStatus {
+    case sucess
+    case tooSmallInput
+    case faceMissing
+}
+
 class FaceSwapLogic {
     
     private let imUtilsWrapper =  ImageUtilsWrapper()
@@ -47,12 +53,12 @@ class FaceSwapLogic {
      - Returns: True if the swapping was ok.
      False if too few facial landmarks was found. False if image size is too small.
      */
-    func swapFaces(im1: UIImage, im2: UIImage) -> Bool {
+    func swapFaces(im1: UIImage, im2: UIImage) -> SwapStatus {
         if im1.size.width < minSize || im1.size.height < minSize {
-            return false
+            return SwapStatus.tooSmallInput
         }
         if im2.size.width < minSize || im2.size.height < minSize {
-            return false
+            return SwapStatus.tooSmallInput
         }
         var im11 = im1
         if im1.size.width > maxSize || im1.size.height > maxSize {
@@ -70,14 +76,14 @@ class FaceSwapLogic {
         currentImage = 2
         detectLandmarks(image: im22)
         
-        if landmarks1.count < 5 || landmarks2.count < 5 {
-            return false
+        if landmarks1.count < 5 || landmarks2.count < 5{
+            return SwapStatus.faceMissing
         }
         
         self.im1 = imUtilsWrapper.swap(im11, face2: im22, landmarks1: landmarks1, landmarks2: landmarks2)
         self.im2 = imUtilsWrapper.swap(im22, face2: im11, landmarks1: landmarks2, landmarks2: landmarks1)
         
-        return true
+        return SwapStatus.sucess
     }
     
     /**
@@ -105,7 +111,6 @@ class FaceSwapLogic {
         guard let observations = request.results as? [VNFaceObservation] else {
             fatalError("unexpected result type!")
         }
-        
         for face in observations {
             getLandmarksForFace(image: imTemporary, face)
         }

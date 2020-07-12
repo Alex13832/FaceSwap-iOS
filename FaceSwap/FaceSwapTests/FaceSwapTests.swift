@@ -24,7 +24,7 @@ class FaceSwapTests: XCTestCase {
         guard let im2 = UIImage(named: "queen") else { return }
         
         let res = sut.swapFaces(im1: im1, im2: im2)
-        XCTAssertTrue(res)
+        XCTAssertEqual(res, SwapStatus.sucess)
         
         let im_res1 = sut.getResultImage1()
         XCTAssertGreaterThan(im_res1.size.width, 0)
@@ -33,27 +33,48 @@ class FaceSwapTests: XCTestCase {
         XCTAssertGreaterThan(im_res2.size.width, 0)
         XCTAssertGreaterThan(im_res2.size.height, 0)
     }
-
+    
     // Tests the time it takes to swap faces in two images.
     func testPerformanceExample() throws {
         measure {
             guard let im1 = UIImage(named: "arnold") else { return }
             guard let im2 = UIImage(named: "queen") else { return }
             let res = sut.swapFaces(im1: im1, im2: im2)
-            XCTAssertTrue(res)
+            XCTAssertEqual(res, SwapStatus.sucess)
+            
         }
     }
     
-    func testTooSmallInput() throws {
+    func testSize() throws {
+        guard let im_face1_exact_width = UIImage(named: "face1_exact_width") else { return }
+        guard let im_face1_width_small = UIImage(named: "face1_width_small") else { return }
+        guard let im_face1_height_small = UIImage(named: "face1_height_small") else { return }
         
+        guard let im_face2_exact_width = UIImage(named: "face2_exact_width") else { return }
+        guard let im_face2_width_small = UIImage(named: "face2_width_small") else { return }
+        guard let im_face2_height_small = UIImage(named: "face2_height_small") else { return }
         
+        var res = sut.swapFaces(im1: im_face1_width_small, im2: im_face2_exact_width)
+        XCTAssertEqual(res, SwapStatus.tooSmallInput)
         
+        res = sut.swapFaces(im1: im_face1_height_small, im2: im_face2_exact_width)
+        XCTAssertEqual(res, SwapStatus.tooSmallInput)
         
+        res = sut.swapFaces(im1: im_face1_exact_width, im2: im_face2_width_small)
+        XCTAssertEqual(res, SwapStatus.tooSmallInput)
+        
+        res = sut.swapFaces(im1: im_face1_exact_width, im2: im_face2_height_small)
+        XCTAssertEqual(res, SwapStatus.tooSmallInput)
+        
+        res = sut.swapFaces(im1: im_face1_exact_width, im2: im_face2_exact_width)
+        XCTAssertEqual(res, SwapStatus.sucess)
     }
     
-    
-    // Test height too small
-    // Test width too small
-    // Test height and width too small
-    // Acceptance test that images with size equal ~ minSize can be swapped.
+    func testMissingFace() throws {
+        guard let im_face_missing = UIImage(named: "no_face") else { return }
+        guard let im_face = UIImage(named: "queen") else { return }
+        
+        let res = sut.swapFaces(im1: im_face_missing, im2: im_face)
+        XCTAssertEqual(res, SwapStatus.faceMissing)
+    }
 }
