@@ -19,7 +19,6 @@
 		1175CD5423AFD4AE005A02DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1175CD5223AFD4AE005A02DF /* LaunchScreen.storyboard */; };
 		1175CD7123B153FA005A02DF /* ImageUtilsWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD7023B153FA005A02DF /* ImageUtilsWrapper.mm */; };
 		1175CD7423B1591E005A02DF /* FSImageUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD7323B1591E005A02DF /* FSImageUtils.mm */; };
-		11C05B4123BA91FD0039A45D /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C05B4023BA91FD0039A45D /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +51,6 @@
 		1175CD7223B15431005A02DF /* ImageUtilsWrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ImageUtilsWrapper.hpp; sourceTree = "<group>"; };
 		1175CD7323B1591E005A02DF /* FSImageUtils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FSImageUtils.mm; sourceTree = "<group>"; };
 		1175CD7523B15938005A02DF /* FSImageUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FSImageUtils.hpp; sourceTree = "<group>"; };
-		11C05B4023BA91FD0039A45D /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../../../Downloads/opencv2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +65,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11C05B4123BA91FD0039A45D /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +103,6 @@
 		1175CD4623AFD4AC005A02DF /* FaceSwap */ = {
 			isa = PBXGroup;
 			children = (
-				11C05B4023BA91FD0039A45D /* opencv2.framework */,
 				1175CD4723AFD4AC005A02DF /* AppDelegate.swift */,
 				1175CD5023AFD4AE005A02DF /* Assets.xcassets */,
 				1175CD5F23B13000005A02DF /* FaceSwap-Bridging-Header.h */,
