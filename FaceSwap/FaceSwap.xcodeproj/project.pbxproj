@@ -11,6 +11,7 @@
 		1100AFE224B3A80B0097B87B /* FaceSwapLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1100AFE124B3A80B0097B87B /* FaceSwapLogic.swift */; };
 		1100AFEB24B4ED440097B87B /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1100AFEA24B4ED440097B87B /* Media.xcassets */; };
 		1100AFEC24B781870097B87B /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1100AFEA24B4ED440097B87B /* Media.xcassets */; };
+		112B7C2B24C47CD20018733E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 112B7C2A24C47CD20018733E /* opencv2.framework */; };
 		1175CD4823AFD4AC005A02DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD4723AFD4AC005A02DF /* AppDelegate.swift */; };
 		1175CD4A23AFD4AC005A02DF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD4923AFD4AC005A02DF /* SceneDelegate.swift */; };
 		1175CD4C23AFD4AC005A02DF /* FaceSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1175CD4B23AFD4AC005A02DF /* FaceSwapView.swift */; };
@@ -37,6 +38,7 @@
 		1100AFD724B25D380097B87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1100AFE124B3A80B0097B87B /* FaceSwapLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSwapLogic.swift; sourceTree = "<group>"; };
 		1100AFEA24B4ED440097B87B /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		112B7C2A24C47CD20018733E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		1175CD4423AFD4AC005A02DF /* FaceSwap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceSwap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1175CD4723AFD4AC005A02DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1175CD4923AFD4AC005A02DF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				112B7C2B24C47CD20018733E /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +87,7 @@
 		1175CD3B23AFD4AC005A02DF = {
 			isa = PBXGroup;
 			children = (
+				112B7C2A24C47CD20018733E /* opencv2.framework */,
 				1175CD4623AFD4AC005A02DF /* FaceSwap */,
 				1100AFD424B25D380097B87B /* FaceSwapTests */,
 				1175CD4523AFD4AC005A02DF /* Products */,

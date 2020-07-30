@@ -47,3 +47,9 @@ Thank you Leonardo and Brad for lending your faces.
 
 ### Share result
   <img src="./images/share.png" width="300" /> 
+
+## Donations
+
+Paypal
+
+![Paypal](images/QR-kod.png)
