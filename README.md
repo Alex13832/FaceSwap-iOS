@@ -48,8 +48,10 @@ Thank you Leonardo and Brad for lending your faces.
 ### Share result
   <img src="./images/share.png" width="300" /> 
 
-## Donations
+## Donate 
 
 Paypal
 
 ![Paypal](images/QR-kod.png)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=st.alexander85%40gmail.com&item_name=A+small+donation+to+a+happy+coder&currency_code=USD&source=url)
